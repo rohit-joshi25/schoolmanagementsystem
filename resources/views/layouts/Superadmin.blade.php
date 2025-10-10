@@ -12,7 +12,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Alpine.js for interactivity -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,22 +38,6 @@
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Dropdown animations */
-        .dropdown-enter {
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Rotate chevron */
-        .rotate-0 {
-            transform: rotate(0deg);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .rotate-180 {
-            transform: rotate(180deg);
-            transition: transform 0.3s ease-in-out;
-        }
-
         /* Custom scrollbar for sidebar */
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
@@ -72,21 +58,21 @@
     </style>
 </head>
 
-<body class="bg-gray-50" x-data="{ sidebarOpen: true, expandedMenus: [0] }">
+<body class="bg-gray-50" x-data="{ sidebarOpen: window.innerWidth > 1024, expandedMenus: [] }">
     <div class="flex h-screen overflow-hidden">
 
         <!-- Backdrop overlay for mobile -->
-        <div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false"
+        <div x-show="sidebarOpen" x-cloak @click="if (window.innerWidth < 1024) sidebarOpen = false"
             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
             class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
 
         <!-- Sidebar -->
-        <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-            class="bg-[#2a2d3a] text-white w-56 flex flex-col h-screen fixed lg:relative z-50 sidebar-transition">
+        <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="bg-[#2a2d3a] text-white w-64 flex flex-col h-screen fixed lg:relative z-50 sidebar-transition">
             <!-- Logo Section -->
-            <div class="bg-[#1f2229] p-3 flex items-center justify-between gap-2">
+            <div class="bg-[#1f2229] p-3 flex items-center justify-between gap-2 h-14">
                 <div class="bg-yellow-400 px-2 py-1 rounded flex items-center justify-center">
                     <span class="text-[10px] text-black uppercase tracking-wide font-semibold">Smart School</span>
                 </div>
@@ -107,12 +93,13 @@
                 <!-- Student Information -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(0) ? expandedMenus = expandedMenus.filter(i => i !== 0) : expandedMenus.push(0)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200 bg-[#1f2229]">
+                        @click="expandedMenus.includes(0) ? expandedMenus = expandedMenus.filter(i => i !== 0) : expandedMenus = [0]"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(0) }">
                         <i data-lucide="users" class="w-4 h-4 flex-shrink-0"></i>
                         <span class="text-sm truncate flex-1 text-left">Student Information</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(0) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(0) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div x-show="expandedMenus.includes(0)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
@@ -125,41 +112,30 @@
                         </a>
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Disabled Students
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
                             Bulk Delete
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Student Categories
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Student House
                         </a>
                     </div>
                 </div>
 
-                <!-- Online Course -->
+                <!-- Fees Collection -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(1) ? expandedMenus = expandedMenus.filter(i => i !== 1) : expandedMenus.push(1)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
+                        @click="expandedMenus.includes(1) ? expandedMenus = expandedMenus.filter(i => i !== 1) : expandedMenus = [1]"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(1) }">
                         <i data-lucide="book-open" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Online Course</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(1) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
+                        <span class="text-sm truncate flex-1 text-left">Fees Collection</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(1) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div x-show="expandedMenus.includes(1)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Course List
+                            Collect Fee
                         </a>
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Course Categories
+                            Create Fee
                         </a>
                     </div>
                 </div>
@@ -167,107 +143,34 @@
                 <!-- Multi Branch -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(2) ? expandedMenus = expandedMenus.filter(i => i !== 2) : expandedMenus.push(2)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="git-branch" class="w-4 h-4 flex-shrink-0"></i>
+                        @click="expandedMenus.includes(2) ? expandedMenus = expandedMenus.filter(i => i !== 2) : expandedMenus = [2]"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(2) }">
+                        <i data-lucide="graduation-cap" class="w-4 h-4 flex-shrink-0"></i>
                         <span class="text-sm truncate flex-1 text-left">Multi Branch</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(2) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(2) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div x-show="expandedMenus.includes(2)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Branch List
+                            Overview
                         </a>
-                    </div>
-                </div>
-
-                <!-- Gmeet Live Classes -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(3) ? expandedMenus = expandedMenus.filter(i => i !== 3) : expandedMenus.push(3)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="video" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Gmeet Live Classes</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(3) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(3)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Live Classes
+                            Create Branch
                         </a>
-                    </div>
-                </div>
-
-                <!-- Zoom Live Classes -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(4) ? expandedMenus = expandedMenus.filter(i => i !== 4) : expandedMenus.push(4)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="video" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Zoom Live Classes</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(4) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(4)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Live Classes
+                            Manage Branch
                         </a>
-                    </div>
-                </div>
-
-                <!-- Behaviour Records -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(5) ? expandedMenus = expandedMenus.filter(i => i !== 5) : expandedMenus.push(5)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Behaviour Records</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(5) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(5)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Records List
+                            Report
                         </a>
-                    </div>
-                </div>
-
-                <!-- CBSE Examination -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(6) ? expandedMenus = expandedMenus.filter(i => i !== 6) : expandedMenus.push(6)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="clipboard-check" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">CBSE Examination</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(6) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(6)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Exam List
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Examinations -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(7) ? expandedMenus = expandedMenus.filter(i => i !== 7) : expandedMenus.push(7)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Examinations</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(7) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(7)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Exam Schedule
+                            Setting
                         </a>
                     </div>
                 </div>
@@ -275,92 +178,91 @@
                 <!-- Attendance -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(8) ? expandedMenus = expandedMenus.filter(i => i !== 8) : expandedMenus.push(8)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="calendar" class="w-4 h-4 flex-shrink-0"></i>
+                        @click="expandedMenus.includes(3) ? expandedMenus = expandedMenus.filter(i => i !== 3) : expandedMenus = [3]"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(3) }">
+                        <i data-lucide="calendar-check" class="w-4 h-4 flex-shrink-0"></i>
                         <span class="text-sm truncate flex-1 text-left">Attendance</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(8) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(3) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
-                    <div x-show="expandedMenus.includes(8)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                    <div x-show="expandedMenus.includes(3)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
                             Student Attendance
                         </a>
-                    </div>
-                </div>
-
-                <!-- QR Code Attendance -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(9) ? expandedMenus = expandedMenus.filter(i => i !== 9) : expandedMenus.push(9)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="qr-code" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">QR Code Attendance</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(9) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(9)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            QR Attendance
+                            Attendance By Date
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Manage Attendance
                         </a>
                     </div>
                 </div>
 
-                <!-- Online Examinations -->
+                <!-- Schools Management -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(10) ? expandedMenus = expandedMenus.filter(i => i !== 10) : expandedMenus.push(10)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Online Examinations</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(10) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
+                        @click="expandedMenus.includes(5) ? expandedMenus = expandedMenus.filter(i => i !== 5) : expandedMenus = [5]"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(5) }">
+                        <i data-lucide="school" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Schools Management</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(5) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
-                    <div x-show="expandedMenus.includes(10)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                    <div x-show="expandedMenus.includes(5)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Online Exams
+                            Add New School
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            School List
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            School Login (Impersonate)
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            School Branches
+                        </a>
+                    </div>
+                </div>
+                <!-- System Settings -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(4) ? expandedMenus = expandedMenus.filter(i => i !== 4) : expandedMenus = [4]"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(4) }">
+                        <i data-lucide="settings" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">System Settings</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(4) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(4)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            General Setting
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Session Setting
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Roles & Permissions
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Backup
                         </a>
                     </div>
                 </div>
 
-                <!-- Academics -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(11) ? expandedMenus = expandedMenus.filter(i => i !== 11) : expandedMenus.push(11)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="graduation-cap" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Academics</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(11) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(11)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Class Timetable
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Lesson Plan -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(12) ? expandedMenus = expandedMenus.filter(i => i !== 12) : expandedMenus.push(12)"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200">
-                        <i data-lucide="book-marked" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Lesson Plan</span>
-                        <i data-lucide="chevron-down" :class="expandedMenus.includes(12) ? '' : 'rotate-180'"
-                            class="w-3 h-3 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(12)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Manage Lesson
-                        </a>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -369,20 +271,21 @@
         <div class="flex-1 flex flex-col overflow-hidden">
 
             <!-- Header -->
-            <div class="bg-white border-b border-gray-200 px-4 py-2.5">
+            <div class="bg-white border-b border-gray-200 px-4 py-2.5 h-14">
                 <div class="flex items-center justify-between gap-4">
 
                     <!-- Left: Menu and School Name -->
                     <div class="flex items-center gap-3">
-                        <button @click="sidebarOpen = !sidebarOpen"
-                            class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-700">
+                        <!-- Show menu button only on mobile/tablet -->
+                        <button @click="if (window.innerWidth < 1024) sidebarOpen = !sidebarOpen"
+                            class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-700 lg:hidden">
                             <i data-lucide="menu" class="w-5 h-5"></i>
                         </button>
-                        <h1 class="text-green-600 text-lg font-semibold">Mount Carmel School</h1>
+                        <h1 class="text-green-600 text-lg font-semibold">School</h1>
                     </div>
 
                     <!-- Center: Search -->
-                    <div class="flex-1 max-w-md">
+                    <div class="flex-1 max-w-md hidden md:block">
                         <div class="relative">
                             <input type="text" placeholder="Search By Student Name..."
                                 class="w-full pr-10 bg-gray-50 border border-gray-300 rounded-md h-9 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -393,38 +296,44 @@
                         </div>
                     </div>
 
-                    <!-- Right: Action Icons -->
+                    <!-- Right: Action Icons & User -->
                     <div class="flex items-center gap-1">
                         <button
                             class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                            <img src="https://flagcdn.com/w40/us.png" alt="Language" class="w-5 h-5 rounded" />
+                            <img src="https://placehold.co/20x20/d1d5db/374151?text=EN" alt="Language"
+                                class="w-5 h-5 rounded" />
                         </button>
                         <button
                             class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                            <i data-lucide="calendar" class="w-5 h-5"></i>
                         </button>
                         <button
                             class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                            <i data-lucide="edit" class="w-4 h-4"></i>
+                            <i data-lucide="edit" class="w-5 h-5"></i>
                         </button>
                         <button
                             class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                            <i data-lucide="message-square" class="w-4 h-4"></i>
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
                         </button>
                         <button
                             class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <i data-lucide="phone" class="w-5 h-5"></i>
                         </button>
                         <button
                             class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                            <i data-lucide="bell" class="w-4 h-4"></i>
+                            <i data-lucide="bell" class="w-5 h-5"></i>
                         </button>
 
                         <!-- User Dropdown -->
                         <div x-data="{ userMenuOpen: false }" class="relative">
                             <button @click="userMenuOpen = !userMenuOpen"
-                                class="h-8 w-8 inline-flex items-center justify-center rounded hover:bg-gray-100 text-gray-600">
-                                <i data-lucide="user" class="w-4 h-4"></i>
+                                class="flex items-center gap-2 rounded hover:bg-gray-100 text-gray-600 p-1">
+                                <img src="https://placehold.co/32x32/E2E8F0/4A5568?text=SA" alt="User"
+                                    class="w-8 h-8 rounded-full" />
+                                <div class="text-left hidden md:block">
+                                    <div class="text-xs font-semibold">{{ Auth::user()->name }}</div>
+                                    <div class="text-[10px] text-gray-500">Super Admin</div>
+                                </div>
                             </button>
 
                             <!-- Dropdown Menu -->
@@ -444,10 +353,6 @@
                                     <i data-lucide="user" class="w-4 h-4 inline mr-2"></i>
                                     Profile
                                 </a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i data-lucide="settings" class="w-4 h-4 inline mr-2"></i>
-                                    Settings
-                                </a>
                                 <hr class="my-1">
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -465,27 +370,28 @@
             </div>
 
             <!-- Content Area -->
-            <div class="flex-1 overflow-auto bg-gray-50">
-                @yield('content')
-            </div>
+            <main class="flex-1 overflow-auto bg-gray-50">
+                <div class="p-4 md:p-6">
+                    @yield('content')
+                </div>
+            </main>
         </div>
     </div>
 
     <!-- Initialize Lucide Icons -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-        });
-
-        // Re-initialize icons after Alpine updates
-        document.addEventListener('alpine:initialized', () => {
-            setInterval(() => {
-                lucide.createIcons();
-            }, 100);
-        });
+        lucide.createIcons();
     </script>
 
     @stack('scripts')
+    <script>
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                document.querySelector('body').__x.$data.sidebarOpen = true;
+            }
+        });
+    </script>
+
 </body>
 
 </html>
