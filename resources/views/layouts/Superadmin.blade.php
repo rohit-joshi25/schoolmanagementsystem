@@ -60,7 +60,6 @@
 
 <body class="bg-gray-50" x-data="{ sidebarOpen: window.innerWidth > 1024, expandedMenus: [] }">
     <div class="flex h-screen overflow-hidden">
-
         <!-- Backdrop overlay for mobile -->
         <div x-show="sidebarOpen" x-cloak @click="if (window.innerWidth < 1024) sidebarOpen = false"
             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
@@ -89,181 +88,273 @@
 
             <!-- Navigation Items -->
             <div class="flex-1 overflow-y-auto py-2 custom-scrollbar">
-
-                <!-- Student Information -->
+                <!-- Dashboard -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(0) ? expandedMenus = expandedMenus.filter(i => i !== 0) : expandedMenus = [0]"
+                        @click="expandedMenus.includes(0) ? expandedMenus = expandedMenus.filter(i => i !== 0) : expandedMenus.push(0)"
                         class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
                         :class="{ 'bg-[#1f2229]': expandedMenus.includes(0) }">
-                        <i data-lucide="users" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Student Information</span>
+                        <i data-lucide="layout-dashboard" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Dashboard</span>
                         <i data-lucide="chevron-right" :class="expandedMenus.includes(0) ? 'rotate-90' : ''"
                             class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div x-show="expandedMenus.includes(0)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Student Details
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Student Admission
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Bulk Delete
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Fees Collection -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(1) ? expandedMenus = expandedMenus.filter(i => i !== 1) : expandedMenus = [1]"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
-                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(1) }">
-                        <i data-lucide="book-open" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Fees Collection</span>
-                        <i data-lucide="chevron-right" :class="expandedMenus.includes(1) ? 'rotate-90' : ''"
-                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(1)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Collect Fee
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Create Fee
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Multi Branch -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(2) ? expandedMenus = expandedMenus.filter(i => i !== 2) : expandedMenus = [2]"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
-                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(2) }">
-                        <i data-lucide="graduation-cap" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Multi Branch</span>
-                        <i data-lucide="chevron-right" :class="expandedMenus.includes(2) ? 'rotate-90' : ''"
-                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(2)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Overview
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Create Branch
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Manage Branch
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Report
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Setting
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Attendance -->
-                <div>
-                    <button
-                        @click="expandedMenus.includes(3) ? expandedMenus = expandedMenus.filter(i => i !== 3) : expandedMenus = [3]"
-                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
-                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(3) }">
-                        <i data-lucide="calendar-check" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">Attendance</span>
-                        <i data-lucide="chevron-right" :class="expandedMenus.includes(3) ? 'rotate-90' : ''"
-                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="expandedMenus.includes(3)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Student Attendance
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Attendance By Date
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Manage Attendance
+                        <a href="{{ route('superadmin.dashboard') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ request()->routeIs('superadmin.dashboard') ? 'bg-[#16181e]' : '' }}">
+                            Overview cards, charts
                         </a>
                     </div>
                 </div>
 
                 <!-- Schools Management -->
+                @php $isSchoolMenuOpen = Str::startsWith(Route::currentRouteName(), 'superadmin.schools'); @endphp
                 <div>
                     <button
-                        @click="expandedMenus.includes(5) ? expandedMenus = expandedMenus.filter(i => i !== 5) : expandedMenus = [5]"
+                        @click="expandedMenus.includes(1) ? expandedMenus = expandedMenus.filter(i => i !== 1) : expandedMenus.push(1)"
                         class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
-                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(5) }">
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(1) }">
                         <i data-lucide="school" class="w-4 h-4 flex-shrink-0"></i>
                         <span class="text-sm truncate flex-1 text-left">Schools Management</span>
-                        <i data-lucide="chevron-right" :class="expandedMenus.includes(5) ? 'rotate-90' : ''"
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(1) ? 'rotate-90' : ''"
                             class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
-                    <div x-show="expandedMenus.includes(5)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                    <div x-show="expandedMenus.includes(1)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="{{ route('superadmin.schools.create') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ request()->routeIs('superadmin.schools.create') ? 'bg-[#16181e]' : '' }}">
                             Add New School
                         </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                        <a href="{{ route('superadmin.schools.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ request()->routeIs('superadmin.schools.index') ? 'bg-[#16181e]' : '' }}">
                             School List
                         </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                        <a href="{{ route('superadmin.schools.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.schools.index') ? 'sidebar-link-active' : '' }}">
                             School Login (Impersonate)
                         </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                        <a href="{{ route('superadmin.schools.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.schools.index') ? 'sidebar-link-active' : '' }}">
                             School Branches
                         </a>
                     </div>
                 </div>
-                <!-- System Settings -->
+
+                <!-- Subscription Plans -->
                 <div>
                     <button
-                        @click="expandedMenus.includes(4) ? expandedMenus = expandedMenus.filter(i => i !== 4) : expandedMenus = [4]"
+                        @click="expandedMenus.includes(2) ? expandedMenus = expandedMenus.filter(i => i !== 2) : expandedMenus.push(2)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(2) }">
+                        <i data-lucide="gem" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Subscription Plans</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(2) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(2)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="{{ route('superadmin.plans.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ request()->routeIs('superadmin.plans.*') ? 'bg-[#16181e]' : '' }}">
+                            Create/Edit/Delete Plan
+                        </a>
+                        <a href="{{ route('superadmin.subscriptions.create') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Assign Plan to School
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Upgrade/Downgrade
+                        </a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                            Renewal History
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Payments & Billing -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(3) ? expandedMenus = expandedMenus.filter(i => i !== 3) : expandedMenus.push(3)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(3) }">
+                        <i data-lucide="dollar-sign" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Payments & Billing</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(3) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(3)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Invoices</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Payment
+                            Gateways</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Commission
+                            & Earnings</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Payment
+                            Logs</a>
+                    </div>
+                </div>
+
+                <!-- Modules Control -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(4) ? expandedMenus = expandedMenus.filter(i => i !== 4) : expandedMenus.push(4)"
                         class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
                         :class="{ 'bg-[#1f2229]': expandedMenus.includes(4) }">
-                        <i data-lucide="settings" class="w-4 h-4 flex-shrink-0"></i>
-                        <span class="text-sm truncate flex-1 text-left">System Settings</span>
+                        <i data-lucide="sliders-horizontal" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Modules Control</span>
                         <i data-lucide="chevron-right" :class="expandedMenus.includes(4) ? 'rotate-90' : ''"
                             class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div x-show="expandedMenus.includes(4)" x-collapse class="bg-[#1f2229] overflow-hidden">
                         <a href="#"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            General Setting
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Session Setting
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Roles & Permissions
-                        </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
-                            Backup
-                        </a>
+                            Enable/Disable modules per plan</a>
                     </div>
                 </div>
 
+                <!-- Analytics -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(5) ? expandedMenus = expandedMenus.filter(i => i !== 5) : expandedMenus.push(5)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(5) }">
+                        <i data-lucide="bar-chart-2" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Analytics</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(5) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(5)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Revenue
+                            Report</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Tenant
+                            Growth</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Storage
+                            Usage</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">API
+                            usage</a>
+                    </div>
+                </div>
 
+                <!-- Communication -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(6) ? expandedMenus = expandedMenus.filter(i => i !== 6) : expandedMenus.push(6)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(6) }">
+                        <i data-lucide="message-square" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Communication</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(6) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(6)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Send
+                            Global Notice</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Send
+                            Email/SMS to All Tenants</a>
+                    </div>
+                </div>
+
+                <!-- Support Tickets -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(7) ? expandedMenus = expandedMenus.filter(i => i !== 7) : expandedMenus.push(7)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(7) }">
+                        <i data-lucide="life-buoy" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Support Tickets</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(7) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(7)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">All
+                            Tickets</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Assign
+                            Staff</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Close/Reply</a>
+                    </div>
+                </div>
+
+                <!-- System Settings -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(8) ? expandedMenus = expandedMenus.filter(i => i !== 8) : expandedMenus.push(8)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(8) }">
+                        <i data-lucide="settings" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">System Settings</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(8) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(8)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">SMTP,
+                            SMS, Payment Gateways</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Backup
+                            Configuration</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Branding</a>
+                    </div>
+                </div>
+
+                <!-- Admin Management -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(9) ? expandedMenus = expandedMenus.filter(i => i !== 9) : expandedMenus.push(9)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(9) }">
+                        <i data-lucide="user-cog" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Admin Management</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(9) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(9)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Add
+                            Staff</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Roles
+                            & Permissions</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Audit
+                            Logs</a>
+                    </div>
+                </div>
+
+                <!-- Backups -->
+                <div>
+                    <button
+                        @click="expandedMenus.includes(10) ? expandedMenus = expandedMenus.filter(i => i !== 10) : expandedMenus.push(10)"
+                        class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
+                        :class="{ 'bg-[#1f2229]': expandedMenus.includes(10) }">
+                        <i data-lucide="database-backup" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm truncate flex-1 text-left">Backups</span>
+                        <i data-lucide="chevron-right" :class="expandedMenus.includes(10) ? 'rotate-90' : ''"
+                            class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div x-show="expandedMenus.includes(10)" x-collapse class="bg-[#1f2229] overflow-hidden">
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Manual
+                            Backup</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">View
+                            Schedule</a>
+                        <a href="#"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Restore
+                            Points</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -360,7 +451,8 @@
                                     <i data-lucide="log-out" class="w-4 h-4 inline mr-2"></i>
                                     Logout
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="hidden">
                                     @csrf
                                 </form>
                             </div>

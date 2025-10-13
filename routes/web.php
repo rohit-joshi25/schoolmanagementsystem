@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-// Import the new controller
 use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\SuperAdmin\SchoolController;
+use App\Http\Controllers\SuperAdmin\PlanController;
+use App\Http\Controllers\SuperAdmin\ImpersonateController;
+use App\Http\Controllers\SuperAdmin\BranchController;
+use App\Http\Controllers\SuperAdmin\SchoolSubscriptionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,41 +21,52 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// General home route, often used for default redirection if needed
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-// Role-based dashboards using organized controllers
+// Super Admin Routes
 Route::middleware(['auth', 'is_superadmin'])->prefix('superadmin')->name('superadmin.')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Add other superadmin routes here in the future
+
+    // Impersonate Route
+    Route::get('schools/{school}/impersonate', [ImpersonateController::class, 'start'])->name('schools.impersonate');
+
+    // ** ADD THIS NESTED ROUTE FOR BRANCHES **
+    Route::resource('schools.branches', BranchController::class)->except(['show']);
+
+    // Schools Management Resourceful Route
+    Route::resource('schools', SchoolController::class);
+
+    // Subscription Plans Routes
+    Route::resource('plans', PlanController::class)->except(['show']);
+
+    Route::resource('schools.branches', BranchController::class)->except(['show']);
+    Route::resource('schools', SchoolController::class);
+
+     // Assign Plan Routes
+    Route::get('subscriptions/create', [SchoolSubscriptionController::class, 'create'])->name('subscriptions.create');
+    Route::post('subscriptions', [SchoolSubscriptionController::class, 'store'])->name('subscriptions.store');
+
 });
 
+
+Route::get('impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop')->middleware('auth');
+
+// Admin Routes
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
-    // You will create an Admin\DashboardController for this later
-    Route::get('dashboard', function () {
-        return view('dashboards.admin');
-    })->name('dashboard');
+    Route::get('dashboard', function () { return view('dashboards.admin'); })->name('dashboard');
 });
 
+// Teacher Routes
 Route::middleware(['auth', 'is_teacher'])->prefix('teacher')->name('teacher.')->group(function () {
-    // You will create a Teacher\DashboardController for this later
-    Route::get('dashboard', function () {
-        return view('dashboards.teacher');
-    })->name('dashboard');
+    Route::get('dashboard', function () { return view('dashboards.teacher'); })->name('dashboard');
 });
 
+// Student Routes
 Route::middleware(['auth', 'is_student'])->prefix('student')->name('student.')->group(function () {
-    // You will create a Student\DashboardController for this later
-    Route::get('dashboard', function () {
-        return view('dashboards.student');
-    })->name('dashboard');
+    Route::get('dashboard', function () { return view('dashboards.student'); })->name('dashboard');
 });
 
+// Accountant Routes
 Route::middleware(['auth', 'is_accountant'])->prefix('accountant')->name('accountant.')->group(function () {
-    // You will create an Accountant\DashboardController for this later
-    Route::get('dashboard', function () {
-        return view('dashboards.accountant');
-    })->name('dashboard');
+    Route::get('dashboard', function () { return view('dashboards.accountant'); })->name('dashboard');
 });
-
