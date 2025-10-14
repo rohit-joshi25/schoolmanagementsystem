@@ -15,6 +15,7 @@ class School extends Model
         'phone',
         'address',
         'status',
+        'logo_path',
     ];
 
     public function branches()

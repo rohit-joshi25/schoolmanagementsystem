@@ -10,6 +10,11 @@ use App\Http\Controllers\SuperAdmin\SchoolSubscriptionController;
 use App\Http\Controllers\SuperAdmin\PaymentGatewayController;
 use App\Http\Controllers\SuperAdmin\PaymentLogController;
 use App\Http\Controllers\SuperAdmin\EarningsController;
+
+
+use App\Http\Controllers\SchoolSuperAdmin\DashboardController as SchoolSuperAdminDashboardController;
+use App\Http\Controllers\SchoolSuperAdmin\SettingsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +76,15 @@ Route::middleware(['auth', 'is_superadmin'])->prefix('superadmin')->name('supera
 
 
 Route::get('impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop')->middleware('auth');
+
+// School Superadmin Routes
+Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')->name('school-superadmin.')->group(function () {
+    Route::get('dashboard', [SchoolSuperAdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('settings/logo', [SettingsController::class, 'updateLogo'])->name('settings.logo.update');
+});
+
 
 // Admin Routes
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
