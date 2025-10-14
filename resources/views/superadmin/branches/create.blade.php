@@ -9,7 +9,6 @@
                 <a href="{{ route('superadmin.schools.branches.index', $school) }}" class="text-blue-600 hover:underline">
                     ← Back to Branch List</a>
             </div>
-
             {{-- Form --}}
             <form action="{{ route('superadmin.schools.branches.store', $school) }}" method="POST" class="space-y-6">
                 @csrf

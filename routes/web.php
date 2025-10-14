@@ -7,8 +7,9 @@ use App\Http\Controllers\SuperAdmin\PlanController;
 use App\Http\Controllers\SuperAdmin\ImpersonateController;
 use App\Http\Controllers\SuperAdmin\BranchController;
 use App\Http\Controllers\SuperAdmin\SchoolSubscriptionController;
-
-
+use App\Http\Controllers\SuperAdmin\PaymentGatewayController;
+use App\Http\Controllers\SuperAdmin\PaymentLogController;
+use App\Http\Controllers\SuperAdmin\EarningsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,26 @@ Route::middleware(['auth', 'is_superadmin'])->prefix('superadmin')->name('supera
      // Assign Plan Routes
     Route::get('subscriptions/create', [SchoolSubscriptionController::class, 'create'])->name('subscriptions.create');
     Route::post('subscriptions', [SchoolSubscriptionController::class, 'store'])->name('subscriptions.store');
+
+    // Upgrade/Downgrade Plan Routes
+    Route::get('subscriptions/change', [SchoolSubscriptionController::class, 'change'])->name('subscriptions.change');
+    Route::post('subscriptions/update', [SchoolSubscriptionController::class, 'update'])->name('subscriptions.update');
+
+     // Subscription History Route
+    Route::get('subscriptions/history', [SchoolSubscriptionController::class, 'history'])->name('subscriptions.history');
+
+    // Invoices Route
+    Route::get('invoices', [\App\Http\Controllers\SuperAdmin\InvoiceController::class, 'index'])->name('invoices.index');
+
+    //Payment Gateway Routes
+    Route::get('payment-gateways', [PaymentGatewayController::class, 'index'])->name('gateways.index');
+    Route::post('payment-gateways', [PaymentGatewayController::class, 'update'])->name('gateways.update');
+
+    //Earnings Route
+     Route::get('earnings', [EarningsController::class, 'index'])->name('earnings.index');
+
+    //payment log
+     Route::get('payment-logs', [PaymentLogController::class, 'index'])->name('payment-logs.index');
 
 });
 

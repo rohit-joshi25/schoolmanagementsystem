@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
-use App\Models\School; // <-- THIS IS THE MISSING LINE
+use App\Models\School;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SchoolController extends Controller
 {
@@ -26,18 +28,34 @@ class SchoolController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        // ** THIS IS THE UPDATED VALIDATION AND LOGIC **
+        $validatedData = $request->validate([
+            // School fields
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:schools,email',
+            'email' => 'required|email|unique:schools,email', // Validate school email
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'status' => 'required|in:active,inactive',
+            // Admin user fields
+            'admin_name' => 'required|string|max:255',
+            'admin_email' => 'required|email|unique:users,email', // Validate admin email separately
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        School::create($request->all());
+        // 1. Create the School
+        $school = School::create($validatedData);
+
+        // 2. Create the School Superadmin User
+        User::create([
+            'name' => $validatedData['admin_name'],
+            'email' => $validatedData['admin_email'],
+            'password' => Hash::make($validatedData['password']),
+            'role' => 'school_superadmin',
+            'school_id' => $school->id,
+        ]);
 
         return redirect()->route('superadmin.schools.index')
-                         ->with('success', 'School created successfully.');
+                         ->with('success', 'School and its admin account created successfully.');
     }
 
     public function edit(School $school)

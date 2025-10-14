@@ -33,4 +33,8 @@ class School extends Model
         // Get the latest active subscription for this school
         return $this->hasOne(SchoolSubscription::class)->where('status', 'active')->latest('id');
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

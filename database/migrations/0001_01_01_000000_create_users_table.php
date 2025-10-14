@@ -17,7 +17,17 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['superadmin', 'admin', 'teacher', 'student', 'accountant'])->default('student');
+
+            // THIS IS THE SINGLE, CORRECTED LINE FOR THE ROLE COLUMN
+            $table->enum('role', [
+                'superadmin',
+                'school_superadmin',
+                'admin',
+                'teacher',
+                'student',
+                'accountant'
+            ])->default('student');
+
             $table->rememberToken();
             $table->timestamps();
         });
@@ -48,4 +58,3 @@ return new class extends Migration
         Schema::dropIfExists('sessions');
     }
 };
-

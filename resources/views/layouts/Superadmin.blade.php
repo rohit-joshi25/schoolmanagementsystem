@@ -159,12 +159,12 @@
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
                             Assign Plan to School
                         </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                        <a href="{{ route('superadmin.subscriptions.change') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.subscriptions.change') ? 'sidebar-link-active' : '' }}">
                             Upgrade/Downgrade
                         </a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">
+                        <a href="{{ route('superadmin.subscriptions.history') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.subscriptions.history') ? 'sidebar-link-active' : '' }}">
                             Renewal History
                         </a>
                     </div>
@@ -182,17 +182,20 @@
                             class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div x-show="expandedMenus.includes(3)" x-collapse class="bg-[#1f2229] overflow-hidden">
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Invoices</a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Payment
-                            Gateways</a>
-                        <a href="#"
+                        <a href="{{ route('superadmin.invoices.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.invoices.index') ? 'sidebar-link-active' : '' }}">
+                            Invoices</a>
+                        <a href="{{ route('superadmin.gateways.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.gateways.index') ? 'sidebar-link-active' : '' }}">
+                            Payment Gateways
+                        </a>
+                        <a href="{{ route('superadmin.earnings.index') }}"
                             class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Commission
                             & Earnings</a>
-                        <a href="#"
-                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left">Payment
-                            Logs</a>
+                        <a href="{{ route('superadmin.payment-logs.index') }}"
+                            class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ Route::is('superadmin.payment-logs.index') ? 'sidebar-link-active' : '' }}">
+                            Payment Logs
+                        </a>
                     </div>
                 </div>
 
