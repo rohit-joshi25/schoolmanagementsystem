@@ -14,6 +14,8 @@ use App\Http\Controllers\SuperAdmin\EarningsController;
 
 use App\Http\Controllers\SchoolSuperAdmin\DashboardController as SchoolSuperAdminDashboardController;
 use App\Http\Controllers\SchoolSuperAdmin\SettingsController;
+use App\Http\Controllers\SchoolSuperAdmin\BranchController as SchoolSuperAdminBranchController;
+use App\Http\Controllers\SchoolSuperAdmin\StaffController as SchoolSuperAdminStaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +85,10 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
 
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('settings/logo', [SettingsController::class, 'updateLogo'])->name('settings.logo.update');
+    //Branch routes
+     Route::resource('staff', SchoolSuperAdminStaffController::class);
+
+    Route::resource('branches', SchoolSuperAdminBranchController::class)->except(['show']);
 });
 
 

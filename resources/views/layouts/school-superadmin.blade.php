@@ -88,9 +88,10 @@
                             'icon' => 'git-branch',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Add/Edit Branch', 'route' => '#'],
-                                ['title' => 'Assign Staff', 'route' => '#'],
-                                ['title' => 'Branch-wise Settings', 'route' => '#'],
+                                ['title' => 'Add/Edit Branch', 'route' => 'school-superadmin.branches.create'],
+                                ['title' => 'Branch List', 'route' => 'school-superadmin.branches.index'],
+                                ['title' => 'Assign Staff', 'route' => 'school-superadmin.staff.index'],
+                                ['title' => 'Branch-wise Settings', 'route' => 'school-superadmin.branches.settings'],
                             ],
                         ],
                         [

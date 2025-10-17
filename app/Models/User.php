@@ -20,8 +20,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',      // <-- ADD THIS LINE
-        'school_id', // <-- ADD THIS LINE
+        'role',
+        'school_id',
+        'branch_id',
     ];
 
     /**
@@ -53,5 +54,9 @@ class User extends Authenticatable
     public function school()
     {
         return $this->belongsTo(School::class);
+    }
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

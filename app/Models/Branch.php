@@ -9,6 +9,10 @@ class Branch extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     * This is the "whitelist" for mass assignment.
+     */
     protected $fillable = [
         'school_id',
         'name',
@@ -18,6 +22,9 @@ class Branch extends Model
         'status',
     ];
 
+    /**
+     * Get the school that owns the branch.
+     */
     public function school()
     {
         return $this->belongsTo(School::class);
