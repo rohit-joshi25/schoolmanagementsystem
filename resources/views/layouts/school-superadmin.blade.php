@@ -7,44 +7,30 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ Auth::user()->school->name ?? 'School Dashboard' }} - School Admin</title>
 
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Alpine.js Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js Collapse Plugin -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        [x-cloak] {
-            display: none !important;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .sidebar-link-active {
-            background-color: #16181e;
-            color: #facc15;
-        }
-
-        /* Custom scrollbar for sidebar */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1f2229;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #4a4d5a;
-            border-radius: 3px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #5a5d6a;
-        }
-
-        /* Add other styles from your superadmin layout */
+        [x-cloak] { display: none !important; }
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-transition { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1f2229; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4a4d5a; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #5a5d6a; }
+        .sidebar-link-active { background-color: #16181e; color: #facc15; }
     </style>
 </head>
 
@@ -100,8 +86,8 @@
                             'icon' => 'book-open',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Classes & Sections', 'route' => '#'],
-                                ['title' => 'Subjects', 'route' => '#'],
+                                ['title' => 'Classes & Sections', 'route' => 'school-superadmin.classes.index'],
+                                ['title' => 'Subjects', 'route' => 'school-superadmin.subjects.index'],
                                 ['title' => 'Assign Teachers', 'route' => '#'],
                                 ['title' => 'Timetable', 'route' => '#'],
                                 ['title' => 'Syllabus', 'route' => '#'],

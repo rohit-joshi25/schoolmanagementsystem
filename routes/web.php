@@ -16,6 +16,8 @@ use App\Http\Controllers\SchoolSuperAdmin\DashboardController as SchoolSuperAdmi
 use App\Http\Controllers\SchoolSuperAdmin\SettingsController;
 use App\Http\Controllers\SchoolSuperAdmin\BranchController as SchoolSuperAdminBranchController;
 use App\Http\Controllers\SchoolSuperAdmin\StaffController as SchoolSuperAdminStaffController;
+use App\Http\Controllers\SchoolSuperAdmin\AcademicClassController;
+use App\Http\Controllers\SchoolSuperAdmin\SubjectController as SchoolSuperAdminSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +91,12 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
      Route::resource('staff', SchoolSuperAdminStaffController::class);
 
     Route::resource('branches', SchoolSuperAdminBranchController::class)->except(['show']);
+    
+    Route::get('branches/settings', [SchoolSuperAdminBranchController::class, 'settings'])->name('branches.settings');
+    //Academic Class Routes
+    Route::resource('classes', AcademicClassController::class)->except(['show', 'edit', 'update']);
+    Route::resource('subjects', SchoolSuperAdminSubjectController::class)->except(['show']);
+
 });
 
 

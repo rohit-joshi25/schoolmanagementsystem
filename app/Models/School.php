@@ -38,4 +38,12 @@ class School extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function classes()
+    {
+        return $this->hasMany(AcademicClass::class);
+    }
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
 }

@@ -91,7 +91,7 @@ class BranchController extends Controller
     }
      public function settings()
     {
-        $activeMenus = [1];
+        $activeMenus = [1]; // Keep 'Branches' menu active
         return view('school-superadmin.branches.settings', compact('activeMenus'));
     }
-}
+};
