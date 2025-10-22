@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Staff Member: {{ $staff->name }}</h1>
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Staff Member: {{ $staff->full_name }}</h1>
 
         <form action="{{ route('school-superadmin.staff.update', $staff) }}" method="POST">
             @csrf
@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name', $staff->name) }}" required
+                        <input type="text" name="name" id="name" value="{{ old('name', $staff->full_name) }}" required
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

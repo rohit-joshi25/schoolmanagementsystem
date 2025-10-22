@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,22 +12,42 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'full_name', // Use full_name
+        'first_name',
+        'last_name',
         'email',
         'password',
         'role',
         'school_id',
         'branch_id',
+        'academic_class_id', // Foreign key
+        'section_id',        // Foreign key
+        'guardian_name',
+        'guardian_relation',
+        'guardian_phone',
+        'guardian_email',
+        'admission_no',
+        'roll_number',
+        'gender',
+        'date_of_birth',
+        'category',
+        'religion',
+        'caste',
+        'mobile_number',
+        'admission_date',
+        'student_photo_path',
+        'blood_group',
+        'house',
+        'height',
+        'weight',
+        'measurement_date',
+        'medical_history',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -37,8 +56,6 @@ class User extends Authenticatable
 
     /**
      * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
      */
     protected function casts(): array
     {
@@ -55,8 +72,50 @@ class User extends Authenticatable
     {
         return $this->belongsTo(School::class);
     }
+
+    /**
+     * Get the branch that the user belongs to.
+     */
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    /**
+     * The subjects that the user (teacher) teaches.
+     */
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'subject_teacher');
+    }
+
+    /**
+     * The attendance records for the user (student).
+     */
+    public function attendances()
+    {
+        return $this->hasMany(StudentAttendance::class, 'user_id');
+    }
+
+    /**
+     * Get the academic class that the user (student) belongs to.
+     * THIS IS THE FIX.
+     */
+    public function academicClass()
+    {
+        return $this->belongsTo(AcademicClass::class);
+    }
+
+    /**
+     * Get the section that the user (student) belongs to.
+     * THIS FIXES THE NEXT ERROR.
+     */
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+    public function leaveRequests() // As a student
+    {
+        return $this->hasMany(LeaveRequest::class, 'user_id');
     }
 }

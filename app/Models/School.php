@@ -46,4 +46,8 @@ class School extends Model
     {
         return $this->hasMany(Subject::class);
     }
+    public function certificateTemplates()
+    {
+        return $this->hasMany(CertificateTemplate::class);
+    }
 }

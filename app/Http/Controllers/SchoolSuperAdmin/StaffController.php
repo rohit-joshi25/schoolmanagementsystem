@@ -15,7 +15,7 @@ class StaffController extends Controller
     {
         $activeMenus = [1];
         $school = Auth::user()->school;
-
+        
         $staff = $school->users()
                         ->where('role', '!=', 'student')
                         ->where('role', '!=', 'school_superadmin')
@@ -36,20 +36,30 @@ class StaffController extends Controller
         return view('school-superadmin.staff.create', compact('branches', 'roles', 'activeMenus'));
     }
 
+    /**
+     * Store a new staff member.
+     */
     public function store(Request $request)
     {
         $school = Auth::user()->school;
 
+        // ** UPDATED VALIDATION **
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'role' => ['required', Rule::in(['admin', 'teacher', 'accountant'])],
             'branch_id' => ['required', 'exists:branches,id', Rule::in($school->branches->pluck('id'))],
         ]);
 
+        // ** UPDATED CREATE LOGIC **
+        $fullName = $validatedData['first_name'] . ' ' . ($validatedData['last_name'] ?? '');
+
         User::create([
-            'name' => $validatedData['name'],
+            'first_name' => $validatedData['first_name'],
+            'last_name' => $validatedData['last_name'] ?? null,
+            'full_name' => $fullName,
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'role' => $validatedData['role'],
@@ -61,10 +71,11 @@ class StaffController extends Controller
                          ->with('success', 'Staff member created successfully.');
     }
 
-    // ** NEW EDIT METHOD **
+    /**
+     * Show the form for editing staff.
+     */
     public function edit(User $staff)
     {
-        // Security Check: Make sure the staff member belongs to the user's school
         if ($staff->school_id !== Auth::user()->school_id) {
             abort(403);
         }
@@ -77,33 +88,39 @@ class StaffController extends Controller
         return view('school-superadmin.staff.edit', compact('staff', 'branches', 'roles', 'activeMenus'));
     }
 
-    // ** NEW UPDATE METHOD **
+    /**
+     * Update an existing staff member.
+     */
     public function update(Request $request, User $staff)
     {
-        // Security Check
         if ($staff->school_id !== Auth::user()->school_id) {
             abort(403);
         }
-
+        
         $school = Auth::user()->school;
 
+        // ** UPDATED VALIDATION **
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($staff->id)],
             'password' => 'nullable|string|min:8|confirmed',
             'role' => ['required', Rule::in(['admin', 'teacher', 'accountant'])],
             'branch_id' => ['required', 'exists:branches,id', Rule::in($school->branches->pluck('id'))],
         ]);
-
-        // Update the user's main details
+        
+        // ** UPDATED UPDATE LOGIC **
+        $fullName = $validatedData['first_name'] . ' ' . ($validatedData['last_name'] ?? '');
+        
         $staff->update([
-            'name' => $validatedData['name'],
+            'first_name' => $validatedData['first_name'],
+            'last_name' => $validatedData['last_name'] ?? null,
+            'full_name' => $fullName,
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
             'branch_id' => $validatedData['branch_id'],
         ]);
 
-        // Only update the password if a new one was provided
         if (!empty($validatedData['password'])) {
             $staff->update(['password' => Hash::make($validatedData['password'])]);
         }

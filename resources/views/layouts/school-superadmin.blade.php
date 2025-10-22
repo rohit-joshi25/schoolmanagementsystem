@@ -88,9 +88,9 @@
                             'sub' => [
                                 ['title' => 'Classes & Sections', 'route' => 'school-superadmin.classes.index'],
                                 ['title' => 'Subjects', 'route' => 'school-superadmin.subjects.index'],
-                                ['title' => 'Assign Teachers', 'route' => '#'],
-                                ['title' => 'Timetable', 'route' => '#'],
-                                ['title' => 'Syllabus', 'route' => '#'],
+                                ['title' => 'Assign Teachers', 'route' => 'school-superadmin.assign-teachers.index'],
+                                ['title' => 'Timetable', 'route' => 'school-superadmin.timetable.index'],
+                                ['title' => 'Syllabus', 'route' => 'school-superadmin.syllabus.index'],
                             ],
                         ],
                         [
@@ -99,12 +99,12 @@
                             'icon' => 'users',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Admission', 'route' => '#'],
-                                ['title' => 'Student List', 'route' => '#'],
-                                ['title' => 'Promotion', 'route' => '#'],
-                                ['title' => 'Attendance', 'route' => '#'],
-                                ['title' => 'Leave Requests', 'route' => '#'],
-                                ['title' => 'Certificates', 'route' => '#'],
+                                ['title' => 'Admission', 'route' => 'school-superadmin.students.create'],
+                                ['title' => 'Student List', 'route' => 'school-superadmin.students.index'],
+                                ['title' => 'Promotion', 'route' => 'school-superadmin.students.promotion.index'],
+                                ['title' => 'Attendance', 'route' => 'school-superadmin.students.attendance.index'],
+                                ['title' => 'Leave Requests', 'route' => 'school-superadmin.leave-requests.index'],
+                                ['title' => 'Certificates', 'route' => 'school-superadmin.certificates.index'],
                             ],
                         ],
                         [

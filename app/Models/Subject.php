@@ -15,4 +15,15 @@ class Subject extends Model
         'code',
         'type',
     ];
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class, 'subject_teacher');
+    }
+    public function timetableEntries() {
+        return $this->hasMany(Timetable::class);
+    }
+    public function syllabi()
+    {
+        return $this->hasMany(Syllabus::class);
+    }
 }

@@ -15,4 +15,7 @@ class Section extends Model
     {
         return $this->belongsTo(AcademicClass::class);
     }
+    public function timetableEntries() {
+        return $this->hasMany(Timetable::class);
+    }
 }
