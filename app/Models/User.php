@@ -118,4 +118,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(LeaveRequest::class, 'user_id');
     }
+    public function teacherAttendances()
+    {
+        return $this->hasMany(TeacherAttendance::class, 'user_id');
+    }
 }

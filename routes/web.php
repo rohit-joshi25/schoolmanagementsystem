@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+//Super Admin Controllers
 use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\SchoolController;
 use App\Http\Controllers\SuperAdmin\PlanController;
@@ -11,7 +13,7 @@ use App\Http\Controllers\SuperAdmin\PaymentGatewayController;
 use App\Http\Controllers\SuperAdmin\PaymentLogController;
 use App\Http\Controllers\SuperAdmin\EarningsController;
 
-
+//School Super Admin Controllers
 use App\Http\Controllers\SchoolSuperAdmin\DashboardController as SchoolSuperAdminDashboardController;
 use App\Http\Controllers\SchoolSuperAdmin\SettingsController;
 use App\Http\Controllers\SchoolSuperAdmin\BranchController as SchoolSuperAdminBranchController;
@@ -26,7 +28,7 @@ use App\Http\Controllers\SchoolSuperAdmin\StudentPromotionController as SchoolSu
 use App\Http\Controllers\SchoolSuperAdmin\StudentAttendanceController as SchoolSuperAdminStudentAttendanceController; 
 use App\Http\Controllers\SchoolSuperAdmin\LeaveRequestController as SchoolSuperAdminLeaveRequestController;
 use App\Http\Controllers\SchoolSuperAdmin\CertificateController as SchoolSuperAdminCertificateController; 
-
+use App\Http\Controllers\SchoolSuperAdmin\TeacherAttendanceController as SchoolSuperAdminTeacherAttendanceController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -117,24 +119,31 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     Route::post('timetable/section/{section}', [SchoolSuperAdminTimetableController::class, 'store'])->name('timetable.store');
     Route::delete('timetable/{timetable}', [SchoolSuperAdminTimetableController::class, 'destroy'])->name('timetable.destroy');
 
-  // Syllabus
-  Route::resource('syllabus', SchoolSuperAdminSyllabusController::class)->only(['index', 'create', 'store', 'destroy']);
+    // Syllabus
+    Route::resource('syllabus', SchoolSuperAdminSyllabusController::class)->only(['index', 'create', 'store', 'destroy']);
 
-  // Students
-  Route::resource('students', SchoolSuperAdminStudentController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-  Route::get('student-promotion', [SchoolSuperAdminStudentPromotionController::class, 'index'])->name('students.promotion.index');
-  Route::post('student-promotion', [SchoolSuperAdminStudentPromotionController::class, 'promote'])->name('students.promotion.promote');
-  Route::get('student-attendance', [SchoolSuperAdminStudentAttendanceController::class, 'index'])->name('students.attendance.index');
-  Route::post('student-attendance', [SchoolSuperAdminStudentAttendanceController::class, 'store'])->name('students.attendance.store');
+    // Students
+    Route::resource('students', SchoolSuperAdminStudentController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('student-promotion', [SchoolSuperAdminStudentPromotionController::class, 'index'])->name('students.promotion.index');
+    Route::post('student-promotion', [SchoolSuperAdminStudentPromotionController::class, 'promote'])->name('students.promotion.promote');
+    Route::get('student-attendance', [SchoolSuperAdminStudentAttendanceController::class, 'index'])->name('students.attendance.index');
+    Route::post('student-attendance', [SchoolSuperAdminStudentAttendanceController::class, 'store'])->name('students.attendance.store');
 
 
-  // Student Leave Requests
-  Route::get('leave-requests', [SchoolSuperAdminLeaveRequestController::class, 'index'])->name('leave-requests.index');
-  Route::post('leave-requests/{leave_request}/update', [SchoolSuperAdminLeaveRequestController::class, 'updateStatus'])->name('leave-requests.update');
+    // Student Leave Requests
+    Route::get('leave-requests', [SchoolSuperAdminLeaveRequestController::class, 'index'])->name('leave-requests.index');
+    Route::post('leave-requests/{leave_request}/update', [SchoolSuperAdminLeaveRequestController::class, 'updateStatus'])->name('leave-requests.update');
 
-  Route::resource('certificates', SchoolSuperAdminCertificateController::class)->except(['show']);
+    Route::resource('certificates', SchoolSuperAdminCertificateController::class)->except(['show']);
 
+    // Teacher Attendance Routes
+    Route::get('teacher-attendance', [SchoolSuperAdminTeacherAttendanceController::class, 'index'])->name('teachers.attendance.index');
+    Route::post('teacher-attendance', [SchoolSuperAdminTeacherAttendanceController::class, 'store'])->name('teachers.attendance.store');
 });
+
+
+
+
 
 // Admin Routes
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {

@@ -113,9 +113,9 @@
                             'icon' => 'user-check',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Add Teacher', 'route' => '#'],
-                                ['title' => 'Teacher Attendance', 'route' => '#'],
-                                ['title' => 'Assign Subjects', 'route' => '#'],
+                                ['title' => 'Add Teacher', 'route' => 'school-superadmin.staff.create'],
+                                ['title' => 'Teacher Attendance', 'route' => 'school-superadmin.teachers.attendance.index'],
+                                ['title' => 'Assign Subjects', 'route' => 'school-superadmin.assign-teachers.index'],
                                 ['title' => 'Payroll', 'route' => '#'],
                                 ['title' => 'Performance', 'route' => '#'],
                             ],

@@ -7,8 +7,6 @@
         @csrf
         <div class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {{-- ** UPDATED NAME FIELDS ** --}}
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-700">First Name *</label>
                     <input type="text" name="first_name" id="first_name" value="{{ old('first_name') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('first_name') border-red-500 @enderror">
