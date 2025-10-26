@@ -44,6 +44,8 @@ class User extends Authenticatable
         'weight',
         'measurement_date',
         'medical_history',
+        'salary_grade_id', 
+        'basic_salary',
     ];
 
     /**
@@ -121,5 +123,21 @@ class User extends Authenticatable
     public function teacherAttendances()
     {
         return $this->hasMany(TeacherAttendance::class, 'user_id');
+    }
+    public function salaryGrade()
+    {
+        return $this->belongsTo(SalaryGrade::class);
+    }
+    public function appraisals()
+    {
+        return $this->hasMany(TeacherAppraisal::class, 'teacher_id');
+    }
+
+    /**
+     * Get all the appraisals this user has conducted (as an admin).
+     */
+    public function appraisalsGiven()
+    {
+        return $this->hasMany(TeacherAppraisal::class, 'appraiser_id');
     }
 }

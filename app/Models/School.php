@@ -50,4 +50,21 @@ class School extends Model
     {
         return $this->hasMany(CertificateTemplate::class);
     }
+    public function salaryGrades()
+    {
+        return $this->hasMany(SalaryGrade::class);
+    }
+    public function performanceCategories()
+    {
+        return $this->hasMany(PerformanceCategory::class);
+    }
+
+    public function teacherAppraisals()
+    {
+        return $this->hasMany(TeacherAppraisal::class);
+    }
+    public function feeGroups()
+    {
+        return $this->hasMany(FeeGroup::class);
+    }
 }

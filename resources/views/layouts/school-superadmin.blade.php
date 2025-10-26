@@ -116,20 +116,17 @@
                                 ['title' => 'Add Teacher', 'route' => 'school-superadmin.staff.create'],
                                 ['title' => 'Teacher Attendance', 'route' => 'school-superadmin.teachers.attendance.index'],
                                 ['title' => 'Assign Subjects', 'route' => 'school-superadmin.assign-teachers.index'],
-                                ['title' => 'Payroll', 'route' => '#'],
-                                ['title' => 'Performance', 'route' => '#'],
+                                ['title' => 'Payroll', 'route' => 'school-superadmin.payroll.index'],
+                                ['title' => 'Performance', 'route' => 'school-superadmin.performance.index'],
                             ],
                         ],
                         [
-                            'id' => 5,
-                            'title' => 'Parents',
-                            'icon' => 'heart-handshake',
-                            'route' => null,
+                            'id' => 5, 'title' => 'Parents', 'icon' => 'heart-handshake', 'route' => null, 'active' => 'school-superadmin.parents.*',
                             'sub' => [
-                                ['title' => 'Parent List', 'route' => '#'],
-                                ['title' => 'Linked Students', 'route' => '#'],
-                                ['title' => 'Communication', 'route' => '#'],
-                            ],
+                                ['title' => 'Parent List', 'route' => 'school-superadmin.parents.index', 'active' => 'school-superadmin.parents.index'],
+                                ['title' => 'Linked Students', 'route' => 'school-superadmin.parents.index', 'active' => 'school-superadmin.parents.index'],
+                                ['title' => 'Communication', 'route' => 'school-superadmin.parents.index', 'active' => 'school-superadmin.parents.index'],
+                            ]
                         ],
                         [
                             'id' => 6,
@@ -137,7 +134,7 @@
                             'icon' => 'dollar-sign',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Fee Groups', 'route' => '#'],
+                                ['title' => 'Fee Groups', 'route' => 'school-superadmin.fee-groups.index', 'active' => 'school-superadmin.fee-groups.*'],
                                 ['title' => 'Fee Types', 'route' => '#'],
                                 ['title' => 'Fee Allocation', 'route' => '#'],
                                 ['title' => 'Payment Collection', 'route' => '#'],

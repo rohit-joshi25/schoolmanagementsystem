@@ -29,6 +29,13 @@ use App\Http\Controllers\SchoolSuperAdmin\StudentAttendanceController as SchoolS
 use App\Http\Controllers\SchoolSuperAdmin\LeaveRequestController as SchoolSuperAdminLeaveRequestController;
 use App\Http\Controllers\SchoolSuperAdmin\CertificateController as SchoolSuperAdminCertificateController; 
 use App\Http\Controllers\SchoolSuperAdmin\TeacherAttendanceController as SchoolSuperAdminTeacherAttendanceController; 
+use App\Http\Controllers\SchoolSuperAdmin\PayrollController as SchoolSuperAdminPayrollController;         
+use App\Http\Controllers\SchoolSuperAdmin\SalaryGradeController as SchoolSuperAdminSalaryGradeController; 
+use App\Http\Controllers\SchoolSuperAdmin\PerformanceCategoryController; 
+use App\Http\Controllers\SchoolSuperAdmin\TeacherAppraisalController;  
+use App\Http\Controllers\SchoolSuperAdmin\ParentController as SchoolSuperAdminParentController;
+use App\Http\Controllers\SchoolSuperAdmin\FeeGroupController as SchoolSuperAdminFeeGroupController; 
+
 
 /*
 |--------------------------------------------------------------------------
@@ -139,10 +146,30 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     // Teacher Attendance Routes
     Route::get('teacher-attendance', [SchoolSuperAdminTeacherAttendanceController::class, 'index'])->name('teachers.attendance.index');
     Route::post('teacher-attendance', [SchoolSuperAdminTeacherAttendanceController::class, 'store'])->name('teachers.attendance.store');
+
+    // Payroll Routes
+    Route::get('payroll', [SchoolSuperAdminPayrollController::class, 'index'])->name('payroll.index');
+    Route::put('payroll/{staff}', [SchoolSuperAdminPayrollController::class, 'update'])->name('payroll.update');
+
+    // Salary Grade Management Routes
+    Route::resource('salary-grades', SchoolSuperAdminSalaryGradeController::class)->except(['index', 'show', 'create', 'edit']);
+
+    // Performance Category Management
+    Route::resource('performance-categories', PerformanceCategoryController::class)->only([
+        'store', 'update', 'destroy'
+    ]);
+    
+    // Teacher Appraisal (Performance) Routes
+    Route::resource('performance', TeacherAppraisalController::class)->only([
+        'index', 'create', 'store', 'show'
+    ]);
+
+    // Parent Routes
+    Route::get('parents', [SchoolSuperAdminParentController::class, 'index'])->name('parents.index');
+
+    //Fees Management
+    Route::resource('fee-groups', SchoolSuperAdminFeeGroupController::class)->except(['show']);
 });
-
-
-
 
 
 // Admin Routes
