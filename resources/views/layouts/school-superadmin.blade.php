@@ -135,11 +135,11 @@
                             'route' => null,
                             'sub' => [
                                 ['title' => 'Fee Groups', 'route' => 'school-superadmin.fee-groups.index', 'active' => 'school-superadmin.fee-groups.*'],
-                                ['title' => 'Fee Types', 'route' => '#'],
-                                ['title' => 'Fee Allocation', 'route' => '#'],
-                                ['title' => 'Payment Collection', 'route' => '#'],
-                                ['title' => 'Discounts/Fines', 'route' => '#'],
-                                ['title' => 'Reports', 'route' => '#'],
+                                ['title' => 'Fee Types', 'route' => 'school-superadmin.fee-types.index', 'active' => 'school-superadmin.fee-types.*'], 
+                                ['title' => 'Fee Allocation', 'route' => 'school-superadmin.fee-allocations.index', 'active' => 'school-superadmin.fee-allocations.*'],
+                                ['title' => 'Payment Collection', 'route' => 'school-superadmin.payment-collection.index', 'active' => 'school-superadmin.payment-collection.*'],
+                                ['title' => 'Discounts/Fines', 'route' => 'school-superadmin.fee-adjustments.index', 'active' => 'school-superadmin.fee-adjustments.*'], // Updated
+                                ['title' => 'Reports', 'route' => 'school-superadmin.fee-reports.index', 'active' => 'school-superadmin.fee-reports.*'], 
                             ],
                         ],
                         [

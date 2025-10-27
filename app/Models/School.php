@@ -67,4 +67,20 @@ class School extends Model
     {
         return $this->hasMany(FeeGroup::class);
     }
+    public function feeTypes()
+    {
+        return $this->hasMany(FeeType::class);
+    }
+    public function feeAllocations()
+    {
+        return $this->hasMany(FeeAllocation::class);
+    }
+    public function feeAdjustments()
+    {
+        return $this->hasMany(FeeAdjustment::class);
+    }
+    public function studentFees()
+    {
+        return $this->hasMany(StudentFee::class);
+    }
 }

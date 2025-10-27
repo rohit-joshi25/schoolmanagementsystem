@@ -5,22 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FeeGroup extends Model
+class FeeType extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'school_id',
+        'fee_group_id',
         'name',
+        'fee_code',
         'description',
     ];
 
-    public function school()
+    public function feeGroup()
     {
-        return $this->belongsTo(School::class);
-    }
-    public function feeTypes()
-    {
-        return $this->hasMany(FeeType::class);
+        return $this->belongsTo(FeeGroup::class);
     }
 }

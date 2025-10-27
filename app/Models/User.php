@@ -140,4 +140,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(TeacherAppraisal::class, 'appraiser_id');
     }
+    public function studentFees()
+    {
+        return $this->hasMany(StudentFee::class, 'user_id');
+    }
+
+    public function studentPayments()
+    {
+        return $this->hasMany(StudentPaymentLog::class, 'user_id');
+    }
 }

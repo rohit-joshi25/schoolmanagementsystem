@@ -20,4 +20,8 @@ class AcademicClass extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    public function feeAllocations()
+    {
+        return $this->hasMany(FeeAllocation::class);
+    }
 }

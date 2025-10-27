@@ -35,6 +35,12 @@ use App\Http\Controllers\SchoolSuperAdmin\PerformanceCategoryController;
 use App\Http\Controllers\SchoolSuperAdmin\TeacherAppraisalController;  
 use App\Http\Controllers\SchoolSuperAdmin\ParentController as SchoolSuperAdminParentController;
 use App\Http\Controllers\SchoolSuperAdmin\FeeGroupController as SchoolSuperAdminFeeGroupController; 
+use App\Http\Controllers\SchoolSuperAdmin\FeeTypeController as SchoolSuperAdminFeeTypeController; 
+use App\Http\Controllers\SchoolSuperAdmin\FeeAllocationController as SchoolSuperAdminFeeAllocationController; 
+use App\Http\Controllers\SchoolSuperAdmin\PaymentCollectionController as SchoolSuperAdminPaymentCollectionController; 
+use App\Http\Controllers\SchoolSuperAdmin\FeeAdjustmentController as SchoolSuperAdminFeeAdjustmentController; 
+use App\Http\Controllers\SchoolSuperAdmin\FeeReportController as SchoolSuperAdminFeeReportController; 
+
 
 
 /*
@@ -169,6 +175,22 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
 
     //Fees Management
     Route::resource('fee-groups', SchoolSuperAdminFeeGroupController::class)->except(['show']);
+
+    Route::resource('fee-types', SchoolSuperAdminFeeTypeController::class)->except(['show']);
+
+    Route::resource('fee-allocations', SchoolSuperAdminFeeAllocationController::class)->except(['show']);
+
+    // Payment Collection
+    Route::get('payment-collection', [SchoolSuperAdminPaymentCollectionController::class, 'index'])->name('payment-collection.index');
+    Route::get('payment-collection/student/{student}', [SchoolSuperAdminPaymentCollectionController::class, 'show'])->name('payment-collection.show');
+    Route::post('payment-collection/student-fee/{studentFee}', [SchoolSuperAdminPaymentCollectionController::class, 'storePayment'])->name('payment-collection.store');
+
+    Route::resource('fee-adjustments', SchoolSuperAdminFeeAdjustmentController::class)->except(['show', 'create', 'edit']);
+
+    // Fees Report Route
+    Route::get('fee-reports', [SchoolSuperAdminFeeReportController::class, 'index'])->name('fee-reports.index');
+
+
 });
 
 
