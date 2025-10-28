@@ -12,6 +12,8 @@ use App\Http\Controllers\SuperAdmin\SchoolSubscriptionController;
 use App\Http\Controllers\SuperAdmin\PaymentGatewayController;
 use App\Http\Controllers\SuperAdmin\PaymentLogController;
 use App\Http\Controllers\SuperAdmin\EarningsController;
+use App\Http\Controllers\SuperAdmin\InvoiceController;
+
 
 //School Super Admin Controllers
 use App\Http\Controllers\SchoolSuperAdmin\DashboardController as SchoolSuperAdminDashboardController;
@@ -20,28 +22,30 @@ use App\Http\Controllers\SchoolSuperAdmin\BranchController as SchoolSuperAdminBr
 use App\Http\Controllers\SchoolSuperAdmin\StaffController as SchoolSuperAdminStaffController;
 use App\Http\Controllers\SchoolSuperAdmin\AcademicClassController;
 use App\Http\Controllers\SchoolSuperAdmin\SubjectController as SchoolSuperAdminSubjectController;
-use App\Http\Controllers\SchoolSuperAdmin\AssignTeacherController as SchoolSuperAdminAssignTeacherController; 
-use App\Http\Controllers\SchoolSuperAdmin\TimetableController as SchoolSuperAdminTimetableController; 
-use App\Http\Controllers\SchoolSuperAdmin\SyllabusController as SchoolSuperAdminSyllabusController; 
-use App\Http\Controllers\SchoolSuperAdmin\StudentController as SchoolSuperAdminStudentController; 
-use App\Http\Controllers\SchoolSuperAdmin\StudentPromotionController as SchoolSuperAdminStudentPromotionController; 
-use App\Http\Controllers\SchoolSuperAdmin\StudentAttendanceController as SchoolSuperAdminStudentAttendanceController; 
+use App\Http\Controllers\SchoolSuperAdmin\AssignTeacherController as SchoolSuperAdminAssignTeacherController;
+use App\Http\Controllers\SchoolSuperAdmin\TimetableController as SchoolSuperAdminTimetableController;
+use App\Http\Controllers\SchoolSuperAdmin\SyllabusController as SchoolSuperAdminSyllabusController;
+use App\Http\Controllers\SchoolSuperAdmin\StudentController as SchoolSuperAdminStudentController;
+use App\Http\Controllers\SchoolSuperAdmin\StudentPromotionController as SchoolSuperAdminStudentPromotionController;
+use App\Http\Controllers\SchoolSuperAdmin\StudentAttendanceController as SchoolSuperAdminStudentAttendanceController;
 use App\Http\Controllers\SchoolSuperAdmin\LeaveRequestController as SchoolSuperAdminLeaveRequestController;
-use App\Http\Controllers\SchoolSuperAdmin\CertificateController as SchoolSuperAdminCertificateController; 
-use App\Http\Controllers\SchoolSuperAdmin\TeacherAttendanceController as SchoolSuperAdminTeacherAttendanceController; 
-use App\Http\Controllers\SchoolSuperAdmin\PayrollController as SchoolSuperAdminPayrollController;         
-use App\Http\Controllers\SchoolSuperAdmin\SalaryGradeController as SchoolSuperAdminSalaryGradeController; 
-use App\Http\Controllers\SchoolSuperAdmin\PerformanceCategoryController; 
-use App\Http\Controllers\SchoolSuperAdmin\TeacherAppraisalController;  
+use App\Http\Controllers\SchoolSuperAdmin\CertificateController as SchoolSuperAdminCertificateController;
+use App\Http\Controllers\SchoolSuperAdmin\TeacherAttendanceController as SchoolSuperAdminTeacherAttendanceController;
+use App\Http\Controllers\SchoolSuperAdmin\PayrollController as SchoolSuperAdminPayrollController;
+use App\Http\Controllers\SchoolSuperAdmin\SalaryGradeController as SchoolSuperAdminSalaryGradeController;
+use App\Http\Controllers\SchoolSuperAdmin\PerformanceCategoryController;
+use App\Http\Controllers\SchoolSuperAdmin\TeacherAppraisalController;
 use App\Http\Controllers\SchoolSuperAdmin\ParentController as SchoolSuperAdminParentController;
-use App\Http\Controllers\SchoolSuperAdmin\FeeGroupController as SchoolSuperAdminFeeGroupController; 
-use App\Http\Controllers\SchoolSuperAdmin\FeeTypeController as SchoolSuperAdminFeeTypeController; 
-use App\Http\Controllers\SchoolSuperAdmin\FeeAllocationController as SchoolSuperAdminFeeAllocationController; 
-use App\Http\Controllers\SchoolSuperAdmin\PaymentCollectionController as SchoolSuperAdminPaymentCollectionController; 
-use App\Http\Controllers\SchoolSuperAdmin\FeeAdjustmentController as SchoolSuperAdminFeeAdjustmentController; 
-use App\Http\Controllers\SchoolSuperAdmin\FeeReportController as SchoolSuperAdminFeeReportController; 
-
-
+use App\Http\Controllers\SchoolSuperAdmin\FeeGroupController as SchoolSuperAdminFeeGroupController;
+use App\Http\Controllers\SchoolSuperAdmin\FeeTypeController as SchoolSuperAdminFeeTypeController;
+use App\Http\Controllers\SchoolSuperAdmin\FeeAllocationController as SchoolSuperAdminFeeAllocationController;
+use App\Http\Controllers\SchoolSuperAdmin\PaymentCollectionController as SchoolSuperAdminPaymentCollectionController;
+use App\Http\Controllers\SchoolSuperAdmin\FeeAdjustmentController as SchoolSuperAdminFeeAdjustmentController;
+use App\Http\Controllers\SchoolSuperAdmin\FeeReportController as SchoolSuperAdminFeeReportController;
+use App\Http\Controllers\SchoolSuperAdmin\IncomeExpenseCategoryController as SchoolSuperAdminIncomeExpenseCategoryController;
+use App\Http\Controllers\SchoolSuperAdmin\TransactionController as SchoolSuperAdminTransactionController;
+use App\Http\Controllers\SchoolSuperAdmin\BookController as SchoolSuperAdminBookController;
+use App\Http\Controllers\SchoolSuperAdmin\BookIssueController as SchoolSuperAdminBookIssueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,7 +119,7 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
      Route::resource('staff', SchoolSuperAdminStaffController::class);
 
     Route::resource('branches', SchoolSuperAdminBranchController::class)->except(['show']);
-    
+
     Route::get('branches/settings', [SchoolSuperAdminBranchController::class, 'settings'])->name('branches.settings');
     //Academic Class Routes
     Route::resource('classes', AcademicClassController::class)->except(['show', 'edit', 'update']);
@@ -164,7 +168,7 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     Route::resource('performance-categories', PerformanceCategoryController::class)->only([
         'store', 'update', 'destroy'
     ]);
-    
+
     // Teacher Appraisal (Performance) Routes
     Route::resource('performance', TeacherAppraisalController::class)->only([
         'index', 'create', 'store', 'show'
@@ -190,7 +194,19 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     // Fees Report Route
     Route::get('fee-reports', [SchoolSuperAdminFeeReportController::class, 'index'])->name('fee-reports.index');
 
+   Route::get('categories', [SchoolSuperAdminIncomeExpenseCategoryController::class, 'index'])->name('categories.index');
+    Route::resource('categories', SchoolSuperAdminIncomeExpenseCategoryController::class)->except(['index', 'show', 'create', 'edit']);
+    Route::get('transactions', [SchoolSuperAdminTransactionController::class, 'index'])->name('transactions.index');
+    Route::get('transactions/add-income', [SchoolSuperAdminTransactionController::class, 'createIncome'])->name('transactions.create_income');
+    Route::get('transactions/add-expense', [SchoolSuperAdminTransactionController::class, 'createExpense'])->name('transactions.create_expense');
+    Route::post('transactions', [SchoolSuperAdminTransactionController::class, 'store'])->name('transactions.store');
+    Route::delete('transactions/{transaction}', [SchoolSuperAdminTransactionController::class, 'destroy'])->name('transactions.destroy');
 
+    // Library Routes
+    Route::resource('books', SchoolSuperAdminBookController::class)->except(['show']);
+    Route::get('book-issues', [SchoolSuperAdminBookIssueController::class, 'index'])->name('book-issues.index');
+    Route::post('book-issues', [SchoolSuperAdminBookIssueController::class, 'store'])->name('book-issues.store');
+    Route::post('book-issues/{bookIssue}/return', [SchoolSuperAdminBookIssueController::class, 'returnBook'])->name('book-issues.return');
 });
 
 

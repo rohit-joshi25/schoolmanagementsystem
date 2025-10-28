@@ -33,4 +33,12 @@ class Branch extends Model
     {
         return $this->hasMany(AcademicClass::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

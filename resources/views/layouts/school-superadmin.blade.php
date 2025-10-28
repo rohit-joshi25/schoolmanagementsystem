@@ -23,14 +23,39 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        [x-cloak] { display: none !important; }
-        body { font-family: 'Inter', sans-serif; }
-        .sidebar-transition { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #1f2229; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4a4d5a; border-radius: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #5a5d6a; }
-        .sidebar-link-active { background-color: #16181e; color: #facc15; }
+        [x-cloak] {
+            display: none !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sidebar-transition {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1f2229;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4a4d5a;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #5a5d6a;
+        }
+
+        .sidebar-link-active {
+            background-color: #16181e;
+            color: #facc15;
+        }
     </style>
 </head>
 
@@ -114,19 +139,38 @@
                             'route' => null,
                             'sub' => [
                                 ['title' => 'Add Teacher', 'route' => 'school-superadmin.staff.create'],
-                                ['title' => 'Teacher Attendance', 'route' => 'school-superadmin.teachers.attendance.index'],
+                                [
+                                    'title' => 'Teacher Attendance',
+                                    'route' => 'school-superadmin.teachers.attendance.index',
+                                ],
                                 ['title' => 'Assign Subjects', 'route' => 'school-superadmin.assign-teachers.index'],
                                 ['title' => 'Payroll', 'route' => 'school-superadmin.payroll.index'],
                                 ['title' => 'Performance', 'route' => 'school-superadmin.performance.index'],
                             ],
                         ],
                         [
-                            'id' => 5, 'title' => 'Parents', 'icon' => 'heart-handshake', 'route' => null, 'active' => 'school-superadmin.parents.*',
+                            'id' => 5,
+                            'title' => 'Parents',
+                            'icon' => 'heart-handshake',
+                            'route' => null,
+                            'active' => 'school-superadmin.parents.*',
                             'sub' => [
-                                ['title' => 'Parent List', 'route' => 'school-superadmin.parents.index', 'active' => 'school-superadmin.parents.index'],
-                                ['title' => 'Linked Students', 'route' => 'school-superadmin.parents.index', 'active' => 'school-superadmin.parents.index'],
-                                ['title' => 'Communication', 'route' => 'school-superadmin.parents.index', 'active' => 'school-superadmin.parents.index'],
-                            ]
+                                [
+                                    'title' => 'Parent List',
+                                    'route' => 'school-superadmin.parents.index',
+                                    'active' => 'school-superadmin.parents.index',
+                                ],
+                                [
+                                    'title' => 'Linked Students',
+                                    'route' => 'school-superadmin.parents.index',
+                                    'active' => 'school-superadmin.parents.index',
+                                ],
+                                [
+                                    'title' => 'Communication',
+                                    'route' => 'school-superadmin.parents.index',
+                                    'active' => 'school-superadmin.parents.index',
+                                ],
+                            ],
                         ],
                         [
                             'id' => 6,
@@ -134,12 +178,36 @@
                             'icon' => 'dollar-sign',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Fee Groups', 'route' => 'school-superadmin.fee-groups.index', 'active' => 'school-superadmin.fee-groups.*'],
-                                ['title' => 'Fee Types', 'route' => 'school-superadmin.fee-types.index', 'active' => 'school-superadmin.fee-types.*'], 
-                                ['title' => 'Fee Allocation', 'route' => 'school-superadmin.fee-allocations.index', 'active' => 'school-superadmin.fee-allocations.*'],
-                                ['title' => 'Payment Collection', 'route' => 'school-superadmin.payment-collection.index', 'active' => 'school-superadmin.payment-collection.*'],
-                                ['title' => 'Discounts/Fines', 'route' => 'school-superadmin.fee-adjustments.index', 'active' => 'school-superadmin.fee-adjustments.*'], // Updated
-                                ['title' => 'Reports', 'route' => 'school-superadmin.fee-reports.index', 'active' => 'school-superadmin.fee-reports.*'], 
+                                [
+                                    'title' => 'Fee Groups',
+                                    'route' => 'school-superadmin.fee-groups.index',
+                                    'active' => 'school-superadmin.fee-groups.*',
+                                ],
+                                [
+                                    'title' => 'Fee Types',
+                                    'route' => 'school-superadmin.fee-types.index',
+                                    'active' => 'school-superadmin.fee-types.*',
+                                ],
+                                [
+                                    'title' => 'Fee Allocation',
+                                    'route' => 'school-superadmin.fee-allocations.index',
+                                    'active' => 'school-superadmin.fee-allocations.*',
+                                ],
+                                [
+                                    'title' => 'Payment Collection',
+                                    'route' => 'school-superadmin.payment-collection.index',
+                                    'active' => 'school-superadmin.payment-collection.*',
+                                ],
+                                [
+                                    'title' => 'Discounts/Fines',
+                                    'route' => 'school-superadmin.fee-adjustments.index',
+                                    'active' => 'school-superadmin.fee-adjustments.*',
+                                ], // Updated
+                                [
+                                    'title' => 'Reports',
+                                    'route' => 'school-superadmin.fee-reports.index',
+                                    'active' => 'school-superadmin.fee-reports.*',
+                                ],
                             ],
                         ],
                         [
@@ -148,10 +216,10 @@
                             'icon' => 'arrow-left-right',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Add Income', 'route' => '#'],
-                                ['title' => 'Add Expense', 'route' => '#'],
-                                ['title' => 'Categories', 'route' => '#'],
-                                ['title' => 'Reports', 'route' => '#'],
+                                ['title' => 'Add Income', 'route' => 'school-superadmin.transactions.create_income'],
+                                ['title' => 'Add Expense', 'route' => 'school-superadmin.transactions.create_expense'],
+                                ['title' => 'Categories', 'route' => 'school-superadmin.categories.index'],
+                                ['title' => 'Reports', 'route' => 'school-superadmin.transactions.index'],
                             ],
                         ],
                         [
@@ -160,8 +228,8 @@
                             'icon' => 'library',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Books', 'route' => '#'],
-                                ['title' => 'Issue/Return', 'route' => '#'],
+                                ['title' => 'Books', 'route' => 'school-superadmin.books.index'],
+                                ['title' => 'Issue/Return', 'route' => 'school-superadmin.book-issues.index'],
                                 ['title' => 'Fine', 'route' => '#'],
                                 ['title' => 'Stock Report', 'route' => '#'],
                             ],

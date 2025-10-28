@@ -1,26 +1,47 @@
 @extends('layouts.school-superadmin')
 @section('content')
-<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Fee Group: {{ $feeGroup->name }}</h1>
-    <form action="{{ route('school-superadmin.fee-groups.update', $feeGroup) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="space-y-6">
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700">Group Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $feeGroup->name) }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('name') border-red-500 @enderror">
-                @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    <div class="max-w-4xl mx-auto px-6 py-10">
+        <div class="bg-white shadow-lg rounded-2xl p-8">
+            {{-- Header --}}
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Edit Fee Group: <span
+                        class="text-blue-600">{{ $feeGroup->name }}</span></h1>
+                <a href="{{ route('school-superadmin.fee-groups.index') }}" class="text-blue-600 hover:underline text-sm">
+                    ← Back to Fee Group List
+                </a>
             </div>
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
-                <textarea name="description" id="description" rows="3" class-="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('description', $feeGroup->description) }}</textarea>
-            </div>
+
+            {{-- Form --}}
+            <form action="{{ route('school-superadmin.fee-groups.update', $feeGroup) }}" method="POST" class="space-y-6">
+                @csrf
+                @method('PUT')
+
+                <!-- Group Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Group Name *</label>
+                    <input type="text" name="name" id="name" value="{{ old('name', $feeGroup->name) }}" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 @error('name') border-red-500 @enderror">
+                    @error('name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description
+                        (Optional)</label>
+                    <textarea name="description" id="description" rows="3"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500">{{ old('description', $feeGroup->description) }}</textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="pt-6 border-t flex justify-end">
+                    <button type="submit"
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition-all duration-200">
+                        Update Fee Group
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="mt-6">
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
-                Update Fee Group
-            </button>
-        </div>
-    </form>
-</div>
+    </div>
 @endsection

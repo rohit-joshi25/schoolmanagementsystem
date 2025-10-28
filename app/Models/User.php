@@ -44,7 +44,7 @@ class User extends Authenticatable
         'weight',
         'measurement_date',
         'medical_history',
-        'salary_grade_id', 
+        'salary_grade_id',
         'basic_salary',
     ];
 
@@ -148,5 +148,9 @@ class User extends Authenticatable
     public function studentPayments()
     {
         return $this->hasMany(StudentPaymentLog::class, 'user_id');
+    }
+    public function bookIssues()
+    {
+        return $this->hasMany(BookIssue::class, 'user_id');
     }
 }
