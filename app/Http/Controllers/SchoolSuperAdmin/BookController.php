@@ -114,4 +114,16 @@ class BookController extends Controller
         return redirect()->route('school-superadmin.books.index')
                          ->with('success', 'Book deleted successfully.');
     }
+    public function stockReport()
+    {
+        $activeMenus = [8]; // ID for Library menu
+        $school = Auth::user()->school;
+
+        // Get all books, eager load their branch, and group them by branch_id
+        $books = $school->books()->with('branch')->orderBy('branch_id')->get();
+
+        $booksByBranch = $books->groupBy('branch.name'); // Group by the branch's name
+
+        return view('school-superadmin.library.reports.stock', compact('booksByBranch', 'activeMenus'));
+    }
 }

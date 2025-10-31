@@ -46,6 +46,12 @@ use App\Http\Controllers\SchoolSuperAdmin\IncomeExpenseCategoryController as Sch
 use App\Http\Controllers\SchoolSuperAdmin\TransactionController as SchoolSuperAdminTransactionController;
 use App\Http\Controllers\SchoolSuperAdmin\BookController as SchoolSuperAdminBookController;
 use App\Http\Controllers\SchoolSuperAdmin\BookIssueController as SchoolSuperAdminBookIssueController;
+use App\Http\Controllers\SchoolSuperAdmin\LibraryFineController as SchoolSuperAdminLibraryFineController;
+use App\Http\Controllers\SchoolSuperAdmin\GradeSystemController as SchoolSuperAdminGradeSystemController;
+use App\Http\Controllers\SchoolSuperAdmin\ExamController as SchoolSuperAdminExamController;
+use App\Http\Controllers\SchoolSuperAdmin\MarksEntryController as SchoolSuperAdminMarksEntryController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -202,13 +208,25 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     Route::post('transactions', [SchoolSuperAdminTransactionController::class, 'store'])->name('transactions.store');
     Route::delete('transactions/{transaction}', [SchoolSuperAdminTransactionController::class, 'destroy'])->name('transactions.destroy');
 
-    // Library Routes
+    // Library Routes / Stock Report
+    Route::get('stock-report', [SchoolSuperAdminBookController::class, 'stockReport'])->name('books.report');
     Route::resource('books', SchoolSuperAdminBookController::class)->except(['show']);
+
     Route::get('book-issues', [SchoolSuperAdminBookIssueController::class, 'index'])->name('book-issues.index');
     Route::post('book-issues', [SchoolSuperAdminBookIssueController::class, 'store'])->name('book-issues.store');
     Route::post('book-issues/{bookIssue}/return', [SchoolSuperAdminBookIssueController::class, 'returnBook'])->name('book-issues.return');
-});
 
+    // Library Fine Routes
+    Route::get('library-fines', [SchoolSuperAdminLibraryFineController::class, 'index'])->name('library-fines.index');
+    Route::post('library-fines/{fine}/pay', [SchoolSuperAdminLibraryFineController::class, 'markAsPaid'])->name('library-fines.pay');
+
+    // Examinations
+    Route::resource('grade-systems', SchoolSuperAdminGradeSystemController::class)->except(['show']);
+    Route::resource('exams', SchoolSuperAdminExamController::class)->except(['show']);
+    Route::get('marks-entry', [SchoolSuperAdminMarksEntryController::class, 'index'])->name('marks-entry.index');
+    Route::post('marks-entry', [SchoolSuperAdminMarksEntryController::class, 'store'])->name('marks-entry.store');
+
+});
 
 // Admin Routes
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {

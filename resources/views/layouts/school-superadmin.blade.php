@@ -202,7 +202,7 @@
                                     'title' => 'Discounts/Fines',
                                     'route' => 'school-superadmin.fee-adjustments.index',
                                     'active' => 'school-superadmin.fee-adjustments.*',
-                                ], // Updated
+                                ],
                                 [
                                     'title' => 'Reports',
                                     'route' => 'school-superadmin.fee-reports.index',
@@ -230,8 +230,8 @@
                             'sub' => [
                                 ['title' => 'Books', 'route' => 'school-superadmin.books.index'],
                                 ['title' => 'Issue/Return', 'route' => 'school-superadmin.book-issues.index'],
-                                ['title' => 'Fine', 'route' => '#'],
-                                ['title' => 'Stock Report', 'route' => '#'],
+                                ['title' => 'Fine', 'route' => 'school-superadmin.library-fines.index'],
+                                ['title' => 'Stock Report', 'route' => 'school-superadmin.books.report'],
                             ],
                         ],
                         [
@@ -240,9 +240,9 @@
                             'icon' => 'file-text',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Exam Setup', 'route' => '#'],
-                                ['title' => 'Grade System', 'route' => '#'],
-                                ['title' => 'Marks Entry', 'route' => '#'],
+                                ['title' => 'Exam Setup', 'route' => 'school-superadmin.exams.index'],
+                                ['title' => 'Grade System', 'route' => 'school-superadmin.grade-systems.index'],
+                                ['title' => 'Marks Entry', 'route' => 'school-superadmin.marks-entry.index'],
                                 ['title' => 'Report Cards', 'route' => '#'],
                                 ['title' => 'Analytics', 'route' => '#'],
                             ],

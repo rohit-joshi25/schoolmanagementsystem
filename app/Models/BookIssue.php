@@ -39,4 +39,8 @@ class BookIssue extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function fine()
+    {
+        return $this->hasOne(LibraryFine::class);
+    }
 }

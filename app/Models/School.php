@@ -96,4 +96,16 @@ class School extends Model
     {
         return $this->hasMany(Book::class);
     }
+    public function libraryFines()
+    {
+        return $this->hasMany(LibraryFine::class);
+    }
+    public function gradeSystems()
+    {
+        return $this->hasMany(GradeSystem::class);
+    }
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
 }

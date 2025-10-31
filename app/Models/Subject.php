@@ -26,4 +26,8 @@ class Subject extends Model
     {
         return $this->hasMany(Syllabus::class);
     }
+    public function examMarks()
+    {
+        return $this->hasMany(ExamMark::class);
+    }
 }

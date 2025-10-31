@@ -1,35 +1,39 @@
 @extends('layouts.school-superadmin')
 
 @section('content')
-    <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Staff Member: {{ $staff->full_name }}</h1>
+    <div class="max-w-4xl mx-auto px-6 py-10">
+        <div class="bg-white shadow-lg rounded-2xl p-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800 mb-4 md:mb-0">Edit Staff Member: {{ $staff->full_name }}</h1>
+            </div>
 
-        <form action="{{ route('school-superadmin.staff.update', $staff) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="space-y-6">
+            <form action="{{ route('school-superadmin.staff.update', $staff) }}" method="POST" class="space-y-6">
+                @csrf
+                @method('PUT')
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name', $staff->full_name) }}" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('name') border-red-500 @enderror">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" name="name" id="name" value="{{ old('name', $staff->full_name) }}"
+                            required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Login Email</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Login Email</label>
                         <input type="email" name="email" id="email" value="{{ old('email', $staff->email) }}"
                             required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('email') border-red-500 @enderror">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 @error('email') border-red-500 @enderror">
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
                         <select name="role" id="role" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500">
                             @foreach ($roles as $role)
                                 <option value="{{ $role }}"
                                     {{ old('role', $staff->role) == $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
@@ -37,9 +41,9 @@
                         </select>
                     </div>
                     <div>
-                        <label for="branch_id" class="block text-sm font-medium text-gray-700">Assign to Branch</label>
+                        <label for="branch_id" class="block text-sm font-medium text-gray-700 mb-1">Assign to Branch</label>
                         <select name="branch_id" id="branch_id" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500">
                             @foreach ($branches as $branch)
                                 <option value="{{ $branch->id }}"
                                     {{ old('branch_id', $staff->branch_id) == $branch->id ? 'selected' : '' }}>
@@ -52,27 +56,27 @@
                             the password.</p>
                     </div>
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">New Password</label>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
                         <input type="password" name="password" id="password"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('password') border-red-500 @enderror">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 @error('password') border-red-500 @enderror">
                         @error('password')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm New
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirm New
                             Password</label>
                         <input type="password" name="password_confirmation" id="password_confirmation"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500">
                     </div>
                 </div>
-                <div class="mt-6">
+                <div class="pt-6 border-t flex justify-end">
                     <button type="submit"
-                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
+                        class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
                         Update Staff Account
                     </button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 @endsection

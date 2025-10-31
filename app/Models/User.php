@@ -153,4 +153,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(BookIssue::class, 'user_id');
     }
+    public function libraryFines()
+    {
+        return $this->hasMany(LibraryFine::class, 'user_id');
+    }
+    public function examMarks()
+    {
+        return $this->hasMany(ExamMark::class, 'student_id');
+    }
 }

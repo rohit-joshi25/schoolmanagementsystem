@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\BookIssue;
 use App\Models\Book;
 use App\Models\User;
+use App\Models\LibraryFine; // <-- Import the new LibraryFine model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon; // <-- Import Carbon for date calculations
 
 class BookIssueController extends Controller
 {
+    // Define the fine per day. You can change this value.
+    private const FINE_PER_DAY = 0.50; // $0.50 per day
+
     /**
      * Display the main book issue/return page.
      */
@@ -21,13 +26,9 @@ class BookIssueController extends Controller
         $activeMenus = [8]; // ID for Library menu
         $school = Auth::user()->school;
 
-        // Get all students for the dropdown
         $students = $school->users()->where('role', 'student')->orderBy('full_name')->get();
-
-        // Get all available books for the dropdown
         $books = $school->books()->where('available_quantity', '>', 0)->orderBy('title')->get();
 
-        // Get all currently issued (not returned) books
         $issuedBooks = BookIssue::where('school_id', $school->id)
                                 ->where('status', 'issued')
                                 ->with(['student', 'book'])
@@ -57,17 +58,15 @@ class BookIssueController extends Controller
 
         $book = Book::findOrFail($validatedData['book_id']);
 
-        // Check if book is available
         if ($book->available_quantity <= 0) {
             return redirect()->back()->with('error', 'This book is currently out of stock.');
         }
 
         DB::beginTransaction();
         try {
-            // 1. Create the issue record
             BookIssue::create([
                 'school_id' => $school->id,
-                'branch_id' => $book->branch_id, // Get branch from the book
+                'branch_id' => $book->branch_id,
                 'book_id' => $book->id,
                 'user_id' => $validatedData['user_id'],
                 'issue_date' => now()->format('Y-m-d'),
@@ -75,7 +74,6 @@ class BookIssueController extends Controller
                 'status' => 'issued',
             ]);
 
-            // 2. Decrement the available quantity of the book
             $book->decrement('available_quantity');
 
             DB::commit();
@@ -90,7 +88,7 @@ class BookIssueController extends Controller
     }
 
     /**
-     * Mark a book as returned.
+     * Mark a book as returned and create a fine if it's late.
      */
     public function returnBook(BookIssue $bookIssue)
     {
@@ -99,21 +97,41 @@ class BookIssueController extends Controller
             abort(403);
         }
 
-        // Check if already returned
         if ($bookIssue->status == 'returned') {
             return redirect()->back()->with('error', 'This book has already been returned.');
         }
 
         DB::beginTransaction();
         try {
+            $returnDate = Carbon::now();
+            $dueDate = Carbon::parse($bookIssue->due_date);
+
             // 1. Update the issue record
             $bookIssue->update([
-                'return_date' => now()->format('Y-m-d'),
+                'return_date' => $returnDate->format('Y-m-d'),
                 'status' => 'returned',
             ]);
 
             // 2. Increment the available quantity of the book
             $bookIssue->book()->increment('available_quantity');
+
+            // 3. ** NEW LOGIC: Check for fines **
+            if ($returnDate->isAfter($dueDate)) {
+                $daysOverdue = $returnDate->diffInDays($dueDate);
+                $totalFine = $daysOverdue * self::FINE_PER_DAY;
+
+                // Create a new fine record
+                LibraryFine::create([
+                    'school_id' => $bookIssue->school_id,
+                    'branch_id' => $bookIssue->branch_id,
+                    'user_id' => $bookIssue->user_id,
+                    'book_issue_id' => $bookIssue->id,
+                    'days_overdue' => $daysOverdue,
+                    'fine_rate' => self::FINE_PER_DAY,
+                    'total_amount' => $totalFine,
+                    'status' => 'pending', // The fine is now pending payment
+                ]);
+            }
 
             DB::commit();
 
