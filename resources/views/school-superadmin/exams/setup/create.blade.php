@@ -14,7 +14,7 @@
                     <div class="md:col-span-2">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Exam Name *</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 @error('name') border-red-500 @enderror"
+                            class="w-full border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }} rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
                             placeholder="e.g., Mid-Term Exam 2025">
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -25,7 +25,7 @@
                         <label for="grade_system_id" class="block text-sm font-medium text-gray-700 mb-1">Grade System
                             *</label>
                         <select name="grade_system_id" id="grade_system_id" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 @error('grade_system_id') border-red-500 @enderror">
+                            class="w-full border {{ $errors->has('grade_system_id') ? 'border-red-500' : 'border-gray-300' }} rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-500">
                             <option value="">-- Select a Grade System --</option>
                             @foreach ($gradeSystems as $system)
                                 <option value="{{ $system->id }}"
