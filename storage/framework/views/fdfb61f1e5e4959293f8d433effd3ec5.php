@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ Auth::user()->school->name ?? 'School Dashboard' }} - School Admin</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo e(Auth::user()->school->name ?? 'School Dashboard'); ?> - School Admin</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -59,28 +59,28 @@
     </style>
 </head>
 
-<body class="bg-gray-50" x-data="{ sidebarOpen: window.innerWidth > 1024, expandedMenus: [] }" x-init="expandedMenus = {{ json_encode($activeMenus ?? []) }}">
+<body class="bg-gray-50" x-data="{ sidebarOpen: window.innerWidth > 1024, expandedMenus: [] }" x-init="expandedMenus = <?php echo e(json_encode($activeMenus ?? [])); ?>">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
             class="bg-[#2a2d3a] text-white w-64 flex flex-col h-screen fixed lg:relative z-50 transition-transform duration-300 ease-in-out">
             <div class="bg-[#1f2229] p-3 flex items-center justify-center gap-2 h-14">
-                @if (Auth::user()->school && Auth::user()->school->logo_path)
-                    <img src="{{ asset('storage/' . Auth::user()->school->logo_path) }}" alt="School Logo"
+                <?php if(Auth::user()->school && Auth::user()->school->logo_path): ?>
+                    <img src="<?php echo e(asset('storage/' . Auth::user()->school->logo_path)); ?>" alt="School Logo"
                         class="h-10 object-contain">
-                @else
+                <?php else: ?>
                     <div class="bg-yellow-400 px-2 py-1 rounded flex items-center justify-center">
                         <span
-                            class="text-[10px] text-black uppercase tracking-wide font-semibold">{{ Auth::user()->school->name ?? 'School' }}</span>
+                            class="text-[10px] text-black uppercase tracking-wide font-semibold"><?php echo e(Auth::user()->school->name ?? 'School'); ?></span>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
             <div class="bg-[#1f2229] px-3 py-2 text-xs border-t border-gray-700">
                 <div>Current Session: 2025-26</div>
             </div>
             <!-- Navigation Items -->
             <div class="flex-1 overflow-y-auto py-2 custom-scrollbar">
-                @php
+                <?php
                     $menuItems = [
                         [
                             'id' => 0,
@@ -365,39 +365,40 @@
                             ],
                         ],
                     ];
-                @endphp
+                ?>
 
-                @foreach ($menuItems as $menu)
+                <?php $__currentLoopData = $menuItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div>
-                        @if (count($menu['sub']) > 0)
+                        <?php if(count($menu['sub']) > 0): ?>
                             <button
-                                @click="expandedMenus.includes({{ $menu['id'] }}) ? expandedMenus = expandedMenus.filter(i => i !== {{ $menu['id'] }}) : expandedMenus.push({{ $menu['id'] }})"
+                                @click="expandedMenus.includes(<?php echo e($menu['id']); ?>) ? expandedMenus = expandedMenus.filter(i => i !== <?php echo e($menu['id']); ?>) : expandedMenus.push(<?php echo e($menu['id']); ?>)"
                                 class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] transition-all duration-200"
-                                :class="{ 'bg-[#1f2229]': expandedMenus.includes({{ $menu['id'] }}) }">
-                                <i data-lucide="{{ $menu['icon'] }}" class="w-4 h-4 flex-shrink-0"></i>
-                                <span class="text-sm truncate flex-1 text-left">{{ $menu['title'] }}</span>
+                                :class="{ 'bg-[#1f2229]': expandedMenus.includes(<?php echo e($menu['id']); ?>) }">
+                                <i data-lucide="<?php echo e($menu['icon']); ?>" class="w-4 h-4 flex-shrink-0"></i>
+                                <span class="text-sm truncate flex-1 text-left"><?php echo e($menu['title']); ?></span>
                                 <i data-lucide="chevron-right"
-                                    :class="expandedMenus.includes({{ $menu['id'] }}) ? 'rotate-90' : ''"
+                                    :class="expandedMenus.includes(<?php echo e($menu['id']); ?>) ? 'rotate-90' : ''"
                                     class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                             </button>
-                            <div x-show="expandedMenus.includes({{ $menu['id'] }})" x-collapse
+                            <div x-show="expandedMenus.includes(<?php echo e($menu['id']); ?>)" x-collapse
                                 class="bg-[#1f2229] overflow-hidden">
-                                @foreach ($menu['sub'] as $submenu)
-                                    <a href="{{ $submenu['route'] != '#' ? route($submenu['route']) : '#' }}"
-                                        class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left {{ request()->routeIs($submenu['route']) ? 'sidebar-link-active' : '' }}">
-                                        {{ $submenu['title'] }}
+                                <?php $__currentLoopData = $menu['sub']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $submenu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <a href="<?php echo e($submenu['route'] != '#' ? route($submenu['route']) : '#'); ?>"
+                                        class="block w-full px-3 py-2 pl-11 text-sm hover:bg-[#16181e] transition-colors text-gray-300 text-left <?php echo e(request()->routeIs($submenu['route']) ? 'sidebar-link-active' : ''); ?>">
+                                        <?php echo e($submenu['title']); ?>
+
                                     </a>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
-                        @else
-                            <a href="{{ route($menu['route']) }}"
-                                class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] {{ request()->routeIs($menu['route']) ? 'sidebar-link-active' : '' }}">
-                                <i data-lucide="{{ $menu['icon'] }}" class="w-4 h-4"></i>
-                                <span class="text-sm">{{ $menu['title'] }}</span>
+                        <?php else: ?>
+                            <a href="<?php echo e(route($menu['route'])); ?>"
+                                class="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-[#1f2229] <?php echo e(request()->routeIs($menu['route']) ? 'sidebar-link-active' : ''); ?>">
+                                <i data-lucide="<?php echo e($menu['icon']); ?>" class="w-4 h-4"></i>
+                                <span class="text-sm"><?php echo e($menu['title']); ?></span>
                             </a>
-                        @endif
+                        <?php endif; ?>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
         <!-- Main Content -->
@@ -410,44 +411,45 @@
                             <i data-lucide="menu" class="w-5 h-5"></i>
                         </button>
                         <h1 class="text-green-600 text-lg font-semibold">
-                            {{ Auth::user()->school->name ?? 'School' }}
+                            <?php echo e(Auth::user()->school->name ?? 'School'); ?>
+
                         </h1>
                     </div>
-                    {{-- User Dropdown --}}
+                    
                     <div x-data="{ userMenuOpen: false }" class="relative">
                         <button @click="userMenuOpen = !userMenuOpen" class="flex items-center gap-2 p-1">
                             <img src="https://placehold.co/32x32/E2E8F0/4A5568?text=SA" alt="User"
                                 class="w-8 h-8 rounded-full" />
                             <div class="text-left hidden md:block">
-                                <div class="text-xs font-semibold">{{ Auth::user()->name }}</div>
+                                <div class="text-xs font-semibold"><?php echo e(Auth::user()->name); ?></div>
                                 <div class="text-[10px] text-gray-500">School Superadmin</div>
                             </div>
                         </button>
                         <div x-show="userMenuOpen" @click.away="userMenuOpen = false" x-cloak
                             class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
                             <div class="px-4 py-2 text-sm text-gray-700 border-b">
-                                <div class="font-semibold">{{ Auth::user()->name }}</div>
-                                <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
+                                <div class="font-semibold"><?php echo e(Auth::user()->name); ?></div>
+                                <div class="text-xs text-gray-500"><?php echo e(Auth::user()->email); ?></div>
                             </div>
 
-                            {{-- ** THIS IS THE FIX ** --}}
-                            {{-- This link only shows if an impersonation session is active --}}
-                            @if (session('impersonating_by_superadmin'))
-                                <a href="{{ route('impersonate.stop') }}"
+                            
+                            
+                            <?php if(session('impersonating_by_superadmin')): ?>
+                                <a href="<?php echo e(route('impersonate.stop')); ?>"
                                     class="block px-4 py-2 text-sm text-blue-700 font-semibold hover:bg-gray-100">
                                     <i data-lucide="arrow-left-circle" class="w-4 h-4 inline mr-2"></i>
                                     Back to Superadmin
                                 </a>
-                            @endif
+                            <?php endif; ?>
 
-                            <a href="{{ route('logout') }}"
+                            <a href="<?php echo e(route('logout')); ?>"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                 class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                                 <i data-lucide="log-out" class="w-4 h-4 inline mr-2"></i>
                                 Logout
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                                @csrf
+                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="hidden">
+                                <?php echo csrf_field(); ?>
                             </form>
                         </div>
                     </div>
@@ -455,7 +457,7 @@
             </header>
             <main class="flex-1 overflow-auto bg-gray-50">
                 <div class="p-4 md:p-6">
-                    @yield('content')
+                    <?php echo $__env->yieldContent('content'); ?>
                 </div>
             </main>
         </div>
@@ -471,7 +473,8 @@
             }
         });
     </script>
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
 </html>
+<?php /**PATH C:\xampp\htdocs\sms\resources\views/layouts/school-superadmin.blade.php ENDPATH**/ ?>

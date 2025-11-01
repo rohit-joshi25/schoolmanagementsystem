@@ -50,9 +50,27 @@ use App\Http\Controllers\SchoolSuperAdmin\LibraryFineController as SchoolSuperAd
 use App\Http\Controllers\SchoolSuperAdmin\GradeSystemController as SchoolSuperAdminGradeSystemController;
 use App\Http\Controllers\SchoolSuperAdmin\ExamController as SchoolSuperAdminExamController;
 use App\Http\Controllers\SchoolSuperAdmin\MarksEntryController as SchoolSuperAdminMarksEntryController;
+use App\Http\Controllers\SchoolSuperAdmin\ReportCardController as SchoolSuperAdminReportCardController; 
+use App\Http\Controllers\SchoolSuperAdmin\ExamAnalyticsController as SchoolSuperAdminExamAnalyticsController; 
+
+
+//// gap///
 
 
 
+
+
+
+
+
+/////gap/////
+
+use App\Http\Controllers\SchoolSuperAdmin\NoticeController as SchoolSuperAdminNoticeController;
+use App\Http\Controllers\SchoolSuperAdmin\CommunicationController as SchoolSuperAdminCommunicationController; 
+use App\Http\Controllers\SchoolSuperAdmin\CommunicationSettingsController as SchoolSuperAdminCommunicationSettingsController; // <-- Import new controller
+use App\Http\Controllers\SchoolSuperAdmin\CertificateController;
+use App\Models\Section;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -225,8 +243,72 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     Route::resource('exams', SchoolSuperAdminExamController::class)->except(['show']);
     Route::get('marks-entry', [SchoolSuperAdminMarksEntryController::class, 'index'])->name('marks-entry.index');
     Route::post('marks-entry', [SchoolSuperAdminMarksEntryController::class, 'store'])->name('marks-entry.store');
+    //Report Cards
+    Route::get('report-cards', [SchoolSuperAdminReportCardController::class, 'index'])->name('report-cards.index');
+    Route::get('report-cards/show', [SchoolSuperAdminReportCardController::class, 'show'])->name('report-cards.show');
+    // Exam Analytics
+    Route::get('exam-analytics', [SchoolSuperAdminExamAnalyticsController::class, 'index'])->name('exam-analytics.index');
 
+
+//GAP//////
+
+
+
+
+
+
+
+
+
+
+
+
+
+///
+    // Communication //
+
+    //Notices
+    Route::resource('notices', SchoolSuperAdminNoticeController::class)->except(['show']);
+
+    // Communication
+    Route::get('communication', [SchoolSuperAdminCommunicationController::class, 'index'])->name('communication.index');
+    Route::post('communication/send', [SchoolSuperAdminCommunicationController::class, 'send'])->name('communication.send');
+    Route::get('communication-settings', [SchoolSuperAdminCommunicationSettingsController::class, 'index'])->name('communication-settings.index');
+    Route::post('communication-settings', [SchoolSuperAdminCommunicationSettingsController::class, 'update'])->name('communication-settings.update');
+
+
+    ///
+
+
+
+
+    ///
+
+    //Certificates
+    Route::prefix('certificates')->name('certificates.')->group(function () {
+        Route::get('transfer-certificate', [CertificateController::class, 'transferCertificate'])
+             ->name('transfer-certificate');
+        
+        Route::get('id-card', [CertificateController::class, 'idCard'])
+             ->name('id-card');
+        
+        Route::get('custom-certificate', [CertificateController::class, 'customCertificate'])
+             ->name('custom-certificate');  
+    });
+    Route::get('/api/students-by-section/{section}', [CertificateController::class, 'getStudentsBySection'])
+     ->name('api.students-by-section');
+     //Transfer Certificate
+    Route::get('transfer-certificate/prepare/{student}', [CertificateController::class, 'prepareTransferCertificate'])
+        ->name('transfer-certificate.prepare');
+    Route::post('transfer-certificate/download', [CertificateController::class, 'downloadTransferCertificate'])
+        ->name('transfer-certificate.download');
+
+    Route::get('id-card', [CertificateController::class, 'idCard'])
+        ->name('id-card');
+    Route::get('custom-certificate', [CertificateController::class, 'customCertificate'])
+        ->name('custom-certificate');
 });
+    
 
 // Admin Routes
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {

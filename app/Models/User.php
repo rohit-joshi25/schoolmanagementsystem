@@ -105,7 +105,7 @@ class User extends Authenticatable
      */
     public function academicClass()
     {
-        return $this->belongsTo(AcademicClass::class);
+        return $this->belongsTo(AcademicClass::class, 'academic_class_id');
     }
 
     /**
