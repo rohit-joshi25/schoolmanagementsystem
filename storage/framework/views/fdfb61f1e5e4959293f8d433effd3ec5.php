@@ -312,7 +312,7 @@
                             'icon' => 'award',
                             'route' => null,
                             'sub' => [
-                                ['title' => 'Transfer Certificate', 'route' => 'school-superadmin.certificates.transfer-certificate'],
+                                ['title' => 'Transfer Certificate', 'route' => 'school-superadmin.certificates.transfer.index'],
                                 ['title' => 'ID Card', 'route' => 'school-superadmin.certificates.id-card'],
                                 ['title' => 'Custom Certificates', 'route' => 'school-superadmin.certificates.custom-certificate'],
                             ],

@@ -285,9 +285,9 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     ///
 
     //Certificates
-    Route::prefix('certificates')->name('certificates.')->group(function () {
+    Route::prefix('certificates')->name('certificates.')->group(function () { // Keep this for template CRUD
         Route::get('transfer-certificate', [CertificateController::class, 'transferCertificate'])
-             ->name('transfer-certificate');
+             ->name('transfer.index'); // Changed from transfer-certificate
         
         Route::get('id-card', [CertificateController::class, 'idCard'])
              ->name('id-card');
@@ -298,10 +298,10 @@ Route::middleware(['auth', 'is_school_superadmin'])->prefix('school-superadmin')
     Route::get('/api/students-by-section/{section}', [CertificateController::class, 'getStudentsBySection'])
      ->name('api.students-by-section');
      //Transfer Certificate
-    Route::get('transfer-certificate/prepare/{student}', [CertificateController::class, 'prepareTransferCertificate'])
-        ->name('transfer-certificate.prepare');
-    Route::post('transfer-certificate/download', [CertificateController::class, 'downloadTransferCertificate'])
-        ->name('transfer-certificate.download');
+    Route::get('certificates/transfer/prepare/{student}', [CertificateController::class, 'prepareTransferCertificate'])
+        ->name('certificates.transfer.prepare');
+    Route::post('certificates/transfer/download', [CertificateController::class, 'downloadTransferCertificate'])
+        ->name('certificates.transfer.download');
 
     Route::get('id-card', [CertificateController::class, 'idCard'])
         ->name('id-card');

@@ -113,7 +113,7 @@ class CertificateController extends Controller
         // Get branches to populate the student selector dropdowns
         $branches = $school->branches()->with(['classes.sections'])->where('status', 'active')->get();
 
-        return view('school-superadmin.certificates.transfer-certificate', compact(
+        return view('school-superadmin.certificates.transfer.index', compact(
             'activeMenus',
             'branches'
         ));
@@ -183,7 +183,7 @@ class CertificateController extends Controller
         }
 
         // Pass the student and school data to the preparation form
-        return view('school-superadmin.certificates.prepare-transfer-certificate', compact('student', 'school'));
+        return view('school-superadmin.certificates.transfer.prepare', compact('student', 'school'));
     }
 
     /**

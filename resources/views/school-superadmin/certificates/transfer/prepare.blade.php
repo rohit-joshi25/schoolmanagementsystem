@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-2">Prepare Transfer Certificate</h1>
     <p class="text-gray-600 mb-6">Review and edit the details below before generating the final PDF.</p>
 
-    <form action="{{ route('school-superadmin.transfer-certificate.download') }}" method="POST">
+    <form action="{{ route('school-superadmin.certificates.transfer.download') }}" method="POST">
         @csrf
         <input type="hidden" name="student_id" value="{{ $student->id }}">
 
@@ -57,10 +57,10 @@
                 <div>
                     <label for="character_conduct" class="block text-sm font-medium text-gray-700">Character &amp; Conduct</label>
                     <select name="character_conduct" id="character_conduct" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Excellent" @if(old('character_conduct', 'Excellent') == 'Excellent') selected @endif>Excellent</option>
-                        <option value="Good" @if(old('character_conduct', 'Good') == 'Good') selected @endif>Good</option>
-                        <option value="Satisfactory" @if(old('character_conduct') == 'Satisfactory') selected @endif>Satisfactory</option>
-                        <option value="Needs Improvement" @if(old('character_conduct') == 'Needs Improvement') selected @endif>Needs Improvement</option>
+                        <option value="Excellent" @if(old('character_conduct', 'Excellent' )=='Excellent' ) selected @endif>Excellent</option>
+                        <option value="Good" @if(old('character_conduct', 'Good' )=='Good' ) selected @endif>Good</option>
+                        <option value="Satisfactory" @if(old('character_conduct')=='Satisfactory' ) selected @endif>Satisfactory</option>
+                        <option value="Needs Improvement" @if(old('character_conduct')=='Needs Improvement' ) selected @endif>Needs Improvement</option>
                     </select>
                 </div>
 
